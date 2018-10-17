@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" th:replace="~{default :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section class="col-md-12">
+    <div class="row">
+        <div class="col-md-3">
+            fname
+        </div>
+        <div class="col-md-3" th:text="${member.fname}">
+        </div>
+        <div class="col-md-3">
+            lname
+        </div>
+        <div class="col-md-3" th:text="${member.lname}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            address
+        </div>
+        <div class="col-md-3" th:text="${member.address}">
+        </div>
+        <div class="col-md-3">
+            city
+        </div>
+        <div class="col-md-3" th:text="${member.city}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            state
+        </div>
+        <div class="col-md-3" th:text="${member.state}">
+        </div>
+        <div class="col-md-3">
+            zip
+        </div>
+        <div class="col-md-3" th:text="${member.zip}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            phone
+        </div>
+        <div class="col-md-3" th:text="${member.phone}">
+        </div>
+        <div class="col-md-3">
+            email
+        </div>
+        <div class="col-md-3" th:text="${member.email}">
+        </div>
+    </div>
+</section>
+
+</body>
+</html>

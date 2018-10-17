@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org" th:replace="~{default :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>New Member</title>
+</head>
+<body>
+<section class="col-md-12">
+
+    <form th:action="@{/member/new}"
+          th:object="${member}"
+          name = "f"
+          method="post">
+        <fieldset>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="userid">Userid:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="userid" type="text" name="userid" class="form-control" th:field="*{userid}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="password">Password: </label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="password" type="text" name="password" class="form-control" th:field="*{password}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="fname">First Name:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="fname" type="text" name="fname" class="form-control" th:field="*{fname}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="lname">Last Name:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="lname" type="text" name="lname" class="form-control" th:field="*{lname}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="address">Address:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="address" type="text" name="address" class="form-control" th:field="*{address}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="city">City:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="city" type="text" name="city" class="form-control" th:field="*{city}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="state">State:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="state" type="text" name="state" class="form-control" th:field="*{state}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="zip">Zip Code:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="zip" type="text" name="zip" class="form-control" th:field="*{zip}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="phone">Phone:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="phone" type="text" name="phone" class="form-control" th:field="*{phone}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="email">Email Address:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="email" type="text" name="email" class="form-control" th:field="*{email}"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <input type="submit" class="form-control" value="Submit"/>
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+
+</section>
+</body>
+</html>
