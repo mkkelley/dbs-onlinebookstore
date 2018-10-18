@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,6 +22,16 @@ public class MemberController {
     @Autowired
     public MemberController(MemberRepository memberRepository) {this.memberRepository = memberRepository;}
 
+    @GetMapping(value="/member")
+    public String listMembers(Model model) {
+        List<Member> memberList = new ArrayList<>();
+        for (Member member : memberRepository.findAll()) {
+            memberList.add(member);
+        }
+
+        model.addAttribute("members", memberList);
+        return "member/member_list";
+    }
     @RequestMapping(value = "/member/new", method = RequestMethod.GET)
     public String newMember(Model model) {
         Member m = new Member();

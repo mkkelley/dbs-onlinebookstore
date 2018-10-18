@@ -7,7 +7,6 @@
 </head>
 <body>
 <section class="col-md-12">
-
     <form th:action="@{/member/new}"
           th:object="${member}"
           name = "f"
@@ -30,7 +29,6 @@
         </fieldset>
         <fieldset th:insert="member/form.html :: formfields"></fieldset>
     </form>
-
 </section>
 </body>
 </html>
