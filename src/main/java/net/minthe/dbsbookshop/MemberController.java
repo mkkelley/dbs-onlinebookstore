@@ -33,19 +33,38 @@ public class MemberController {
         return "redirect:/member/" + member.getUserid();
     }
 
-    @RequestMapping("/member/edit")
-    public String editMember() {
+    @RequestMapping("/member/{userid}/edit")
+    public String editMember(@PathVariable String userid, Model model) {
+        Optional<Member> m = memberRepository.findByUserid(userid);
+        if (!m.isPresent()) {
+            return "";
+        }
+
+        Member member = m.get();
+        model.addAttribute("member", member);
+
         return "member/member_edit";
     }
 
     @GetMapping("/member/{userid}")
     public String listMembers(@PathVariable String userid, Model model) {
-        Optional<Member> m = memberRepository.getByUserid(userid);
+        Optional<Member> m = memberRepository.findByUserid(userid);
         if (!m.isPresent()) {
             return "";
         }
 
         model.addAttribute("member", m.get());
         return "member/member_show";
+    }
+
+    @PostMapping("/member/{userid}")
+    public String updateMember(@PathVariable String userid, @ModelAttribute Member member) {
+        Optional<Member> m = memberRepository.findByUserid(userid);
+        if (!m.isPresent() || !m.get().getUserid().equals(member.getUserid())) {
+            return "";
+        }
+        memberRepository.save(member);
+
+        return "redirect:/member/" + member.getUserid();
     }
 }

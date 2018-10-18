@@ -1,0 +1,73 @@
+<html>
+<head>
+</head>
+<body>
+<form>
+    <div th:fragment="formfields">
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="fname">First Name:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="fname" type="text" name="fname" class="form-control" th:field="*{fname}"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="lname">Last Name:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="lname" type="text" name="lname" class="form-control" th:field="*{lname}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="address">Address:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="address" type="text" name="address" class="form-control" th:field="*{address}"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="city">City:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="city" type="text" name="city" class="form-control" th:field="*{city}"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="state">State:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="state" type="text" name="state" class="form-control" th:field="*{state}"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="zip">Zip Code:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="zip" type="text" name="zip" class="form-control" th:field="*{zip}"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="phone">Phone:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="phone" type="text" name="phone" class="form-control" th:field="*{phone}"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="email">Email Address:</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="email" type="text" name="email" class="form-control" th:field="*{email}"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <input type="submit" class="form-control" value="Submit"/>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
