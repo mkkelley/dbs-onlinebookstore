@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html th:replace="~{default :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TITLE HERE</title>
+</head>
+<body>
+<section class="col-md-12">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ISBN</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Subject</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td>
+                <a th:href="@{/book/{isbn}(isbn=${book.isbn})}" th:text="${book.isbn}"></a>
+            </td>
+            <td th:text="${book.title}"></td>
+            <td th:text="${book.author}"></td>
+            <td th:text="${book.subject}"></td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>
