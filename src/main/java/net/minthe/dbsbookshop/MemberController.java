@@ -24,12 +24,9 @@ public class MemberController {
 
     @GetMapping(value="/member")
     public String listMembers(Model model) {
-        List<Member> memberList = new ArrayList<>();
-        for (Member member : memberRepository.findAll()) {
-            memberList.add(member);
-        }
+        Iterable<Member> members = memberRepository.findAll();
 
-        model.addAttribute("members", memberList);
+        model.addAttribute("members", members);
         return "member/member_list";
     }
     @RequestMapping(value = "/member/new", method = RequestMethod.GET)

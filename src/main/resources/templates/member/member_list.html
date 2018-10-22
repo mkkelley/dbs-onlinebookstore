@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       th:replace="~{default :: layout(~{::title}, ~{::section})}" >
 <head>
     <meta charset="UTF-8">
     <title>Member List</title>
 </head>
 <body>
-<section>
-    <table>
+<section class="col-md-12">
+    <table class="table">
         <tr>
             <th>Username</th>
             <th>First Name</th>
@@ -20,7 +20,10 @@
             </td>
             <td th:text="${member.fname}"></td>
             <td th:text="${member.lname}"></td>
-            <td></td>
+            <td>
+                <a th:href="@{/member/{userid}/edit(userid=${member.userid})}">Edit</a>
+
+            </td>
         </tr>
     </table>
 </section>
