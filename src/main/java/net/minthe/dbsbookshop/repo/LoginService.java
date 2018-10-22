@@ -39,6 +39,9 @@ public class LoginService {
         return false;
     }
 
+    public void logout() {
+        user = null;
+    }
 
     public boolean userLoggedIn() {
         return user != null;

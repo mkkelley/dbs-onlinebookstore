@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  * Created by Michael Kelley on 10/15/2018
@@ -31,6 +32,13 @@ public class LoginController {
         UserAuthenticationRequest uar = new UserAuthenticationRequest();
         model.addAttribute("uar", uar);
         return "login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(RedirectAttributes redirectAttributes) {
+        loginService.logout();
+        redirectAttributes.addFlashAttribute("You have logged out successfully.");
+        return "redirect:/login";
     }
 
     @PostMapping("/login")

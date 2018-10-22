@@ -14,8 +14,28 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
+                <a class="nav-link" th:text="Books" th:href="@{/book}"></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" th:text="Members" th:href="@{/member}"></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto" th:if="${!@loginService.userLoggedIn()}">
+            <li class="navbar-item">
+                <a class="nav-link active" th:text="Login" th:href="@{/login}"></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto" th:if="${@loginService.userLoggedIn()}">
+            <li class="nav-item">
+                <a class="nav-link">Cart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active"
+                   th:text="${@loginService.getUser().getUserid()}"
+                   th:href="@{/member/{userid}(userid=${@loginService.getUser().getUserid()})}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:text="Logout" th:href="@{/logout}"></a>
             </li>
         </ul>
     </div>
