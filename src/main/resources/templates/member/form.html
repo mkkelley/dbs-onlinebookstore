@@ -1,10 +1,10 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 </head>
 <body>
 <form>
     <div th:fragment="formfields">
-        <div class="row">
+        <div class="row form-group">
             <div class="col-md-3 form-group">
                 <label for="fname">First Name:</label>
             </div>
@@ -18,7 +18,7 @@
                 <input id="lname" type="text" name="lname" class="form-control" th:field="*{lname}"/>
             </div>
         </div>
-        <div class="row">
+        <div class="row form-group">
             <div class="col-md-3 form-group">
                 <label for="address">Address:</label>
             </div>
@@ -32,7 +32,7 @@
                 <input id="city" type="text" name="city" class="form-control" th:field="*{city}"/>
             </div>
         </div>
-        <div class="row">
+        <div class="row form-group">
             <div class="col-md-3 form-group">
                 <label for="state">State:</label>
             </div>
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row form-group">
             <div class="col-md-3 form-group">
                 <label for="phone">Phone:</label>
             </div>
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="row">
+        <div class="row form-group">
             <div class="col-md-3 form-group">
                 <input type="submit" class="form-control" value="Submit"/>
             </div>

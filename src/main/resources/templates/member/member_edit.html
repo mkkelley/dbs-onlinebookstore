@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      th:replace="~{default :: layout(~{::title}, ~{::section})}">
 <head>
     <meta charset="UTF-8">
     <title>Edit member</title>
@@ -13,20 +14,14 @@
         <fieldset>
             <div class="row">
                 <div class="col-md-3 form-group">
-                    <label for="userid">Userid:</label>
-                </div>
-                <div class="col-md-3 form-group">
-                    <input id="userid" type="text" name="userid" class="form-control" th:field="*{userid}"/>
-                </div>
-                <div class="col-md-3 form-group">
                     <label for="password">Password: </label>
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="password" type="text" name="password" class="form-control" th:field="*{password}"/>
                 </div>
             </div>
+            <div th:replace="member/form :: formfields"></div>
         </fieldset>
-        <fieldset th:insert="member/form.html :: formfields"></fieldset>
     </form>
 </section>
 </body>
