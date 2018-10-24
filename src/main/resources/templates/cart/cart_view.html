@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html th:replace="~{default :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TITLE HERE</title>
+</head>
+<body>
+<section class="col-md-12">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cart : ${cartMap}">
+            <td>
+                <a th:href="@{/book/{isbn}(isbn=${cart.key.getIsbn()})}" th:text="${cart.key.getTitle()}"></a>
+            </td>
+            <td th:text="${cart.value}"></td>
+            <td th:text="${cart.key.getPrice()}"></td>
+            <td th:text="${cart.key.getPrice().multiply(cart.value)}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>
