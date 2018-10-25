@@ -6,29 +6,29 @@ import java.io.Serializable;
  * Created by Michael Kelley on 10/14/2018
  */
 public class OrderDetailsKey implements Serializable {
-    private Order ono;
-    private Book isbn;
+    private int ono;
+    private String isbn;
 
-    public OrderDetailsKey(Order order, Book isbn) {
+    public OrderDetailsKey(int order, String isbn) {
         this.ono = order;
         this.isbn = isbn;
     }
 
     public OrderDetailsKey() {}
 
-    public Order getOrder() {
+    public int getOrder() {
         return ono;
     }
 
-    public void setOrder(Order order) {
+    public void setOrder(int order) {
         this.ono = order;
     }
 
-    public Book getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Book isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 
@@ -39,13 +39,13 @@ public class OrderDetailsKey implements Serializable {
 
         OrderDetailsKey that = (OrderDetailsKey) o;
 
-        if (!ono.equals(that.ono)) return false;
+        if (ono != that.ono) return false;
         return isbn.equals(that.isbn);
     }
 
     @Override
     public int hashCode() {
-        int result = ono.hashCode();
+        int result = ono;
         result = 31 * result + isbn.hashCode();
         return result;
     }
