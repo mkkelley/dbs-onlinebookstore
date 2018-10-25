@@ -36,18 +36,23 @@ public class ShoppingCart {
         return out;
     }
 
-    public void setQty(Book book, int qty) {
+    public Cart setQty(Book book, int qty) {
         for (Cart c : cartList) {
             if (c.getIsbn().equals(book)) {
-                c.setQty(qty);
-                return;
+                if (qty <= 0) {
+                    cartList.remove(c);
+                    return c;
+                } else {
+                    c.setQty(qty);
+                }
+                return null;
             }
         }
 
         // not found in list, so new item, set qty to one
 
         addBook(book);
-        setQty(book, qty);
+        return setQty(book, qty);
     }
 
     public void addBook(Book book) {

@@ -49,8 +49,12 @@ public class CartService {
         }
 
         ShoppingCart cart = getCart();
-        cart.setQty(book, qty);
-        persist(cart);
+        Cart c = cart.setQty(book, qty);
+        if (c == null) {
+            persist(cart);
+        } else {
+            cartRepository.delete(c);
+        }
     }
 
     private void persist(ShoppingCart shoppingCart) {
