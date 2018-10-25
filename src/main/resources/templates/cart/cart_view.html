@@ -5,26 +5,43 @@
 </head>
 <body>
 <section class="col-md-12">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Total</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="cart : ${cartMap}">
-            <td>
-                <a th:href="@{/book/{isbn}(isbn=${cart.key.getIsbn()})}" th:text="${cart.key.getTitle()}"></a>
-            </td>
-            <td th:text="${cart.value}"></td>
-            <td th:text="${cart.key.getPrice()}"></td>
-            <td th:text="${cart.key.getPrice().multiply(cart.value)}"></td>
-        </tr>
-        </tbody>
-    </table>
+    <form name="f"
+          th:action="@{/cart/update}"
+          method="post">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Quantity</th>
+                <th>New Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cart : ${cartMap}">
+                <td>
+                    <a th:href="@{/book/{isbn}(isbn=${cart.key.getIsbn()})}" th:text="${cart.key.getTitle()}"></a>
+                </td>
+                <td th:text="${cart.value}"></td>
+                <td>
+                    <div class="form-group">
+                        <input type="text"
+                               th:value="${cart.value}"
+                               th:name="${cart.key.isbn}"
+                               th:id="${cart.key.isbn}"/>
+                    </div>
+                </td>
+                <td th:text="${cart.key.getPrice()}"></td>
+                <td th:text="${cart.key.getPrice().multiply(cart.value)}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="form-group">
+            <input type="submit" class="btn btn-warning form-control"
+                   value="Update"/>
+        </div>
+    </form>
 </section>
 </body>
 </html>

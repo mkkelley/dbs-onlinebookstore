@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class CartKey implements Serializable {
     private String userid;
-    private Book isbn;
+    private String isbn;
 
-    public CartKey(String userid, Book isbn) {
+    public CartKey(String userid, String isbn) {
         this.userid = userid;
         this.isbn = isbn;
     }
@@ -21,11 +21,11 @@ public class CartKey implements Serializable {
         this.userid = userid;
     }
 
-    public Book getIsbn() {
+    public String getIsbn() {
         return isbn;
     }
 
-    public void setIsbn(Book isbn) {
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
 

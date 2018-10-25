@@ -11,12 +11,12 @@ import javax.persistence.*;
 public class Cart {
     @Id
     @ManyToOne
-    @JoinColumn(name="userid", referencedColumnName = "userid")
+    @JoinColumn(name="userid")
     private Member userid;
 
     @Id
     @ManyToOne
-    @JoinColumn(name="isbn", referencedColumnName = "isbn")
+    @JoinColumn(name="isbn")
     private Book isbn;
 
     @Column(nullable=false)

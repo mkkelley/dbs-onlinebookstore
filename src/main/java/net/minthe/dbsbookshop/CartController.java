@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -47,5 +48,21 @@ public class CartController {
         }
 
         return "redirect:" + request.getHeader("referrer");
+    }
+
+    @PostMapping("/cart/update")
+    public String updateCart(@RequestParam Map<String, String> formData) {
+        for (var entry : formData.entrySet()) {
+            String isbn = entry.getKey();
+            String qtyString = entry.getValue();
+
+            Optional<Book> b = bookRepository.findById(isbn);
+            if (!b.isPresent()) continue;
+            int qty = Integer.parseInt(qtyString);
+
+            cartService.setQty(b.get(), qty);
+        }
+
+        return "redirect:/cart";
     }
 }
