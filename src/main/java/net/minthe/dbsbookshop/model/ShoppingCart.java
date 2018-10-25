@@ -47,6 +47,7 @@ public class ShoppingCart {
         // not found in list, so new item, set qty to one
 
         addBook(book);
+        setQty(book, qty);
     }
 
     public void addBook(Book book) {
