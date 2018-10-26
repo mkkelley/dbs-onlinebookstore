@@ -26,12 +26,8 @@ public class CartService {
     }
 
     public ShoppingCart getCart() {
-        if (!loginService.userLoggedIn()) {
-            return null;
-        }
-
         List<Cart> carts = cartRepository.findByUserid(loginService.getUser());
-        return new ShoppingCart(carts);
+        return new ShoppingCart(carts, loginService.getUser());
     }
 
     public void addBook(Book book) {

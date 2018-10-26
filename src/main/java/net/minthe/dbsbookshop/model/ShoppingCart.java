@@ -14,13 +14,12 @@ public class ShoppingCart {
     private boolean cartChanged;
     private HashMap<Book, Integer> bookQtyMap;
 
-    public ShoppingCart(Iterable<Cart> cart) {
+    public ShoppingCart(Iterable<Cart> cart, Member user) {
         cartList = new ArrayList<>();
+        this.member = user;
         for (Cart c : cart) {
-            if (this.member == null) {
-                this.member = c.getUserid();
-            } else if (!this.member.equals(c.getUserid())) {
-                throw new IllegalArgumentException("Passed cart contains more than one member's items.");
+            if (!this.member.equals(c.getUserid())) {
+                throw new IllegalArgumentException("Passed cart contains wrong member's items.");
             }
 
             cartList.add(c);

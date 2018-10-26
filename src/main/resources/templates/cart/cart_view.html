@@ -6,6 +6,7 @@
 <body>
 <section class="col-md-12">
     <form name="f"
+          id="f"
           th:action="@{/cart/update}"
           method="post">
         <table class="table">
@@ -16,6 +17,7 @@
                 <th>New Quantity</th>
                 <th>Price</th>
                 <th>Total</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -34,6 +36,8 @@
                 </td>
                 <td th:text="${cart.key.getPrice()}"></td>
                 <td th:text="${cart.key.getPrice().multiply(cart.value)}"></td>
+                <td><input type="button" class="btn btn-danger remove-button" value="X" th:data="${cart.key.isbn}"/>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -42,6 +46,15 @@
                    value="Update"/>
         </div>
     </form>
+    <script>
+        window.onload = function () {
+            $('.remove-button').click(function () {
+                var isbn = $(this).attr('data');
+                $("[id='" + isbn + "']").val("0");
+                $('#f').submit();
+            })
+        }
+    </script>
 </section>
 </body>
 </html>
