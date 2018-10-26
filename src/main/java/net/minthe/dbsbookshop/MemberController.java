@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -23,13 +21,14 @@ public class MemberController {
     @Autowired
     public MemberController(MemberRepository memberRepository) {this.memberRepository = memberRepository;}
 
-    @GetMapping(value="/member")
+    @GetMapping(value = "/member")
     public String listMembers(Model model) {
         Iterable<Member> members = memberRepository.findAll();
 
         model.addAttribute("members", members);
         return "member/member_list";
     }
+
     @RequestMapping(value = "/member/new", method = RequestMethod.GET)
     public String newMember(Model model) {
         Member m = new Member();
@@ -37,10 +36,14 @@ public class MemberController {
         return "member/member_new";
     }
 
-    @RequestMapping(value="/member/new", method=RequestMethod.POST)
+    @RequestMapping(value = "/member/new", method = RequestMethod.POST)
     public String createMember(@ModelAttribute Member member, RedirectAttributes redirectAttributes) {
-        memberRepository.save(member);
-        redirectAttributes.addFlashAttribute("message", "You have registered successfully. Please log in.");
+        try {
+            memberRepository.save(member);
+            redirectAttributes.addFlashAttribute("message", "You have registered successfully. Please log in.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Unable to register user. Please enter valid information.");
+        }
         return "redirect:/login";
     }
 
