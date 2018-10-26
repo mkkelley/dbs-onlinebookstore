@@ -12,10 +12,12 @@
             <th>Title</th>
             <th>Author</th>
             <th>Subject</th>
+            <th>Price</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
+
         <tr th:each="book : ${books}">
             <td>
                 <a th:href="@{/book/{isbn}(isbn=${book.isbn})}" th:text="${book.isbn}"></a>
@@ -23,6 +25,7 @@
             <td th:text="${book.title}"></td>
             <td th:text="${book.author}"></td>
             <td th:text="${book.subject}"></td>
+            <td th:text="'$'+${#numbers.formatDecimal(book.price, 0, 2)}"></td>
             <td></td>
         </tr>
         </tbody>

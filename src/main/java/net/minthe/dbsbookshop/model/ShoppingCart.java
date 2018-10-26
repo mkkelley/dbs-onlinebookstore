@@ -47,14 +47,15 @@ public class ShoppingCart {
 
     /**
      * Update the quantity of a book in the cart
+     *
      * @param book Book to add to cart
-     * @param qty Quantity
+     * @param qty  Quantity
      * @return Optional.empty() if quantity was positive, Optional.of(cart) if quantity was
-     *         zero or negative
+     * zero or negative
      */
     public Optional<Cart> setQty(Book book, int qty) {
         Optional<Cart> c = cartList.stream()
-                .filter( cart -> cart.getIsbn().equals(book) )
+                .filter(cart -> cart.getIsbn().equals(book))
                 .findFirst();
 
         if (!c.isPresent()) {
