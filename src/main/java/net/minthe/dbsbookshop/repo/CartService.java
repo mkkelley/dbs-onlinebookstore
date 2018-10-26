@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Michael Kelley on 10/22/2018
@@ -49,11 +50,11 @@ public class CartService {
         }
 
         ShoppingCart cart = getCart();
-        Cart c = cart.setQty(book, qty);
-        if (c == null) {
+        Optional<Cart> c = cart.setQty(book, qty);
+        if (!c.isPresent()) {
             persist(cart);
         } else {
-            cartRepository.delete(c);
+            cartRepository.delete(c.get());
         }
     }
 
