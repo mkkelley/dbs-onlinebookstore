@@ -26,10 +26,35 @@
             <td th:text="${book.author}"></td>
             <td th:text="${book.subject}"></td>
             <td th:text="'$'+${#numbers.formatDecimal(book.price, 0, 2)}"></td>
-            <td></td>
+            <td><button class="btn btn-info addCartButton" th:data="${book.isbn}">Add to Cart</button>  </td>
         </tr>
         </tbody>
     </table>
+    <script>
+        window.onload = function () {
+            $('.addCartButton').click(function() {
+                var btn = $(this);
+                btn.removeClass('btn-info');
+                btn.addClass('btn-warning');
+                btn.html('Adding...')
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart/add',
+                    data: {'isbn': $(this).attr('data')},
+                    success: function() {
+                        btn.html("Added");
+                        btn.removeClass('btn-warning');
+                        btn.addClass('btn-success');
+                    },
+                    failure: function() {
+                        btn.html("Failed to add to cart.");
+                        btn.removeClass('btn-warning');
+                        btn.addClass('btn-danger');
+                    }
+                })
+            })
+        }
+    </script>
 </section>
 </body>
 </html>

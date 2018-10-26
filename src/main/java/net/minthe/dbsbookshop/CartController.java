@@ -4,6 +4,8 @@ import net.minthe.dbsbookshop.model.Book;
 import net.minthe.dbsbookshop.repo.BookRepository;
 import net.minthe.dbsbookshop.repo.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,14 +42,14 @@ public class CartController {
     }
 
     @PostMapping("/cart/add")
-    public String addToCart(@RequestParam String isbn, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public ResponseEntity<?> addToCart(@RequestParam String isbn) {
         Optional<Book> book = bookRepository.findById(isbn);
         if (!book.isPresent()) {
-            redirectAttributes.addFlashAttribute("message", "Unable to add requested book to cart.");
-            return "redirect:/book";
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return "redirect:" + request.getHeader("referrer");
+        cartService.addBook(book.get());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/cart/update")
