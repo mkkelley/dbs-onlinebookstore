@@ -31,20 +31,12 @@ public class CartService {
     }
 
     public void addBook(Book book) {
-        if (!loginService.userLoggedIn()) {
-            return;
-        }
-
         ShoppingCart cart = getCart();
         cart.addBook(book);
         persist(cart);
     }
 
     public void setQty(Book book, int qty) {
-        if (!loginService.userLoggedIn()) {
-            return;
-        }
-
         ShoppingCart cart = getCart();
         Optional<Cart> c = cart.setQty(book, qty);
         if (!c.isPresent()) {
