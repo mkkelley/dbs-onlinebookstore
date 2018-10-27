@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Michael Kelley on 10/26/2018
+ *
+ * Disallow access to any page other than login or registration if the user is
+ * not logged in.
  */
 @Component
 public class LoginInterceptor extends HandlerInterceptorAdapter {

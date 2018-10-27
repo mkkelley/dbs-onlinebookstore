@@ -2,6 +2,9 @@ package net.minthe.dbsbookshop.cart;
 
 import java.io.Serializable;
 
+/**
+ * Necessary because Cart has a composite key
+ */
 public class CartKey implements Serializable {
     private String userid;
     private String isbn;

@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 /**
  * Created by Michael Kelley on 10/14/2018
+ *
+ * Domain object
  */
 @Entity
 @Table(name="cart")

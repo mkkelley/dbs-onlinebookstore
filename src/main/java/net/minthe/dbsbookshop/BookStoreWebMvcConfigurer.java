@@ -7,6 +7,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Created by Michael Kelley on 10/26/2018
+ *
+ * Spring configuration class to register LoginInterceptor
  */
 @Configuration
 public class BookStoreWebMvcConfigurer implements WebMvcConfigurer {

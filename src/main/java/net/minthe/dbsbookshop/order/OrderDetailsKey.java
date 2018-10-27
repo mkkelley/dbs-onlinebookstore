@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Created by Michael Kelley on 10/14/2018
+ *
+ * Necessary because OrderDetails (odetails table) has a composite key
  */
 public class OrderDetailsKey implements Serializable {
     private long ono;

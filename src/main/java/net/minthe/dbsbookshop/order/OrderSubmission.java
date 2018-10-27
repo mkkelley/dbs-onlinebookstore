@@ -2,6 +2,8 @@ package net.minthe.dbsbookshop.order;
 
 /**
  * Created by Michael Kelley on 10/26/2018
+ *
+ * DAO for Order
  */
 public class OrderSubmission {
     private boolean oneClick;
