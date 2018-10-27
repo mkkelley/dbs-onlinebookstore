@@ -2,6 +2,7 @@ package net.minthe.dbsbookshop.repo;
 
 import net.minthe.dbsbookshop.model.Book;
 import net.minthe.dbsbookshop.model.Cart;
+import net.minthe.dbsbookshop.model.Member;
 import net.minthe.dbsbookshop.model.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,29 +17,25 @@ import java.util.Optional;
 @Service
 public class CartService {
     private final CartRepository cartRepository;
-    private final BookRepository bookRepository;
-    private final LoginService loginService;
 
     @Autowired
-    public CartService(CartRepository cartRepository, BookRepository bookRepository, LoginService loginService) {
+    public CartService(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
-        this.bookRepository = bookRepository;
-        this.loginService = loginService;
     }
 
-    public ShoppingCart getCart() {
-        List<Cart> carts = cartRepository.findByUserid(loginService.getUser());
-        return new ShoppingCart(carts, loginService.getUser());
+    public ShoppingCart getCart(Member user) {
+        List<Cart> carts = cartRepository.findByUserid(user);
+        return new ShoppingCart(carts, user);
     }
 
-    public void addBook(Book book) {
-        ShoppingCart cart = getCart();
+    public void addBook(Member user, Book book) {
+        ShoppingCart cart = getCart(user);
         cart.addBook(book);
         persist(cart);
     }
 
-    public void setQty(Book book, int qty) {
-        ShoppingCart cart = getCart();
+    public void setQty(Member user, Book book, int qty) {
+        ShoppingCart cart = getCart(user);
         Optional<Cart> c = cart.setQty(book, qty);
         if (!c.isPresent()) {
             persist(cart);
@@ -47,8 +44,8 @@ public class CartService {
         }
     }
 
-    public BigDecimal getTotal() {
-        return cartRepository.getTotalForMember(loginService.getUser());
+    public BigDecimal getTotal(Member user) {
+        return cartRepository.getTotalForMember(user);
     }
 
     private void persist(ShoppingCart shoppingCart) {

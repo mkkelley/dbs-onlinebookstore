@@ -3,6 +3,7 @@ package net.minthe.dbsbookshop;
 import net.minthe.dbsbookshop.model.Book;
 import net.minthe.dbsbookshop.repo.BookRepository;
 import net.minthe.dbsbookshop.repo.CartService;
+import net.minthe.dbsbookshop.repo.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +24,21 @@ import java.util.Optional;
 public class CartController {
     private final BookRepository bookRepository;
     private final CartService cartService;
+    private final LoginService loginService;
 
     @Autowired
-    public CartController(BookRepository bookRepository, CartService cartService) {
+    public CartController(BookRepository bookRepository, CartService cartService, LoginService loginService) {
         this.bookRepository = bookRepository;
         this.cartService = cartService;
+        this.loginService = loginService;
     }
 
     @GetMapping("/cart")
     public String viewCart(Model model) {
-        HashMap<Book, Integer> cartMap = cartService.getCart().getMap();
+        HashMap<Book, Integer> cartMap = cartService.getCart(loginService.getUser()).getMap();
 
         model.addAttribute("cartMap", cartMap);
-        model.addAttribute("total", cartService.getTotal());
+        model.addAttribute("total", cartService.getTotal(loginService.getUser()));
 
         return "cart/cart_view";
     }
@@ -47,7 +50,7 @@ public class CartController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        cartService.addBook(book.get());
+        cartService.addBook(loginService.getUser(), book.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -61,7 +64,7 @@ public class CartController {
             if (!b.isPresent()) continue;
             int qty = Integer.parseInt(qtyString);
 
-            cartService.setQty(b.get(), qty);
+            cartService.setQty(loginService.getUser(), b.get(), qty);
         }
 
         return "redirect:/cart";
