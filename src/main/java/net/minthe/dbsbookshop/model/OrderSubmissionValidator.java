@@ -16,8 +16,6 @@ public class OrderSubmissionValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipCity", "shipCity.empty");
-
         OrderSubmission orderSubmission = (OrderSubmission) o;
         if (orderSubmission.isOneClick()) {
             return;

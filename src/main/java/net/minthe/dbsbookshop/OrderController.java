@@ -2,6 +2,7 @@ package net.minthe.dbsbookshop;
 
 import net.minthe.dbsbookshop.model.Order;
 import net.minthe.dbsbookshop.model.OrderSubmission;
+import net.minthe.dbsbookshop.model.OrderSubmissionValidator;
 import net.minthe.dbsbookshop.repo.LoginService;
 import net.minthe.dbsbookshop.repo.OrderRepository;
 import net.minthe.dbsbookshop.repo.OrderService;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,6 +27,11 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final LoginService loginService;
+
+    @InitBinder("orderSubmission")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new OrderSubmissionValidator());
+    }
 
     @Autowired
     public OrderController(OrderRepository orderRepository, OrderService orderService, LoginService loginService) {
