@@ -25,6 +25,10 @@ public class OrderSubmissionValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipState", "shipState.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipAddress", "shipAddress.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipCity", "shipCity.empty");
+        if (orderSubmission.isNewCc()) {
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCcn", "newCcn.empty");
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCcType", "newCcType.empty");
+        }
 
         if (orderSubmission.getShipZip() < 10000 ||
                 orderSubmission.getShipZip() > 99999) {

@@ -1,9 +1,11 @@
 package net.minthe.dbsbookshop;
 
+import net.minthe.dbsbookshop.model.Member;
 import net.minthe.dbsbookshop.model.Order;
 import net.minthe.dbsbookshop.model.OrderSubmission;
 import net.minthe.dbsbookshop.model.OrderSubmissionValidator;
 import net.minthe.dbsbookshop.repo.LoginService;
+import net.minthe.dbsbookshop.repo.MemberRepository;
 import net.minthe.dbsbookshop.repo.OrderRepository;
 import net.minthe.dbsbookshop.repo.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final OrderService orderService;
     private final LoginService loginService;
+    private final MemberRepository memberRepository;
 
     @InitBinder("orderSubmission")
     protected void initBinder(WebDataBinder binder) {
@@ -34,10 +37,11 @@ public class OrderController {
     }
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, OrderService orderService, LoginService loginService) {
+    public OrderController(OrderRepository orderRepository, OrderService orderService, LoginService loginService, MemberRepository memberRepository) {
         this.orderRepository = orderRepository;
         this.orderService = orderService;
         this.loginService = loginService;
+        this.memberRepository = memberRepository;
     }
 
     @GetMapping("/order/{ono}")
@@ -67,6 +71,12 @@ public class OrderController {
                     Timestamp.from(Instant.now())
             );
         } else {
+            if (orderSubmission.isNewCc()) {
+                Member m = loginService.getUser();
+                m.setCreditcardnumber(orderSubmission.getNewCcn());
+                m.setCreditcardtype(orderSubmission.getNewCcType());
+                memberRepository.save(m);
+            }
             order = orderService.generateOrder(
                     loginService.getUser(),
                     Timestamp.from(Instant.now()),
@@ -82,7 +92,7 @@ public class OrderController {
     @GetMapping("/order/new")
     public String newOrder(Model model) {
 
-        Order order = new Order();
+        OrderSubmission order = new OrderSubmission();
         model.addAttribute("order", order);
         return "order/order_new";
     }

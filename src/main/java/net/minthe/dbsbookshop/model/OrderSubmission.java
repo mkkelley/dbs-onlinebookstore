@@ -11,16 +11,46 @@ public class OrderSubmission {
     private String shipCity;
     private String shipState;
     private int shipZip;
+    private boolean newCc;
+    private String newCcn;
+    private String newCcType;
 
-    public OrderSubmission(boolean oneClick, String shipAddress, String shipCity, String shipState, int shipZip) {
+    public OrderSubmission(boolean oneClick, String shipAddress, String shipCity, String shipState, int shipZip, boolean newCc, String newCcn, String newCcType) {
         this.oneClick = oneClick;
         this.shipAddress = shipAddress;
         this.shipCity = shipCity;
         this.shipState = shipState;
         this.shipZip = shipZip;
+        this.newCc = newCc;
+        this.newCcn = newCcn;
+        this.newCcType = newCcType;
     }
 
     public OrderSubmission() {}
+
+    public String getNewCcn() {
+        return newCcn;
+    }
+
+    public void setNewCcn(String newCcn) {
+        this.newCcn = newCcn;
+    }
+
+    public String getNewCcType() {
+        return newCcType;
+    }
+
+    public void setNewCcType(String newCcType) {
+        this.newCcType = newCcType;
+    }
+
+    public boolean isNewCc() {
+        return newCc;
+    }
+
+    public void setNewCc(boolean newCc) {
+        this.newCc = newCc;
+    }
 
     public boolean isOneClick() {
         return oneClick;
@@ -71,9 +101,12 @@ public class OrderSubmission {
 
         if (oneClick != that.oneClick) return false;
         if (shipZip != that.shipZip) return false;
+        if (newCc != that.newCc) return false;
         if (shipAddress != null ? !shipAddress.equals(that.shipAddress) : that.shipAddress != null) return false;
         if (shipCity != null ? !shipCity.equals(that.shipCity) : that.shipCity != null) return false;
-        return shipState != null ? shipState.equals(that.shipState) : that.shipState == null;
+        if (shipState != null ? !shipState.equals(that.shipState) : that.shipState != null) return false;
+        if (newCcn != null ? !newCcn.equals(that.newCcn) : that.newCcn != null) return false;
+        return newCcType != null ? newCcType.equals(that.newCcType) : that.newCcType == null;
     }
 
     @Override
@@ -83,6 +116,9 @@ public class OrderSubmission {
         result = 31 * result + (shipCity != null ? shipCity.hashCode() : 0);
         result = 31 * result + (shipState != null ? shipState.hashCode() : 0);
         result = 31 * result + shipZip;
+        result = 31 * result + (newCc ? 1 : 0);
+        result = 31 * result + (newCcn != null ? newCcn.hashCode() : 0);
+        result = 31 * result + (newCcType != null ? newCcType.hashCode() : 0);
         return result;
     }
 
@@ -94,6 +130,9 @@ public class OrderSubmission {
                 ", shipCity='" + shipCity + '\'' +
                 ", shipState='" + shipState + '\'' +
                 ", shipZip=" + shipZip +
+                ", newCc=" + newCc +
+                ", newCcn='" + newCcn + '\'' +
+                ", newCcType='" + newCcType + '\'' +
                 '}';
     }
 }
