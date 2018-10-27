@@ -6,6 +6,7 @@ import net.minthe.dbsbookshop.model.ShoppingCart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,10 @@ public class CartService {
         } else {
             cartRepository.delete(c.get());
         }
+    }
+
+    public BigDecimal getTotal() {
+        return cartRepository.getTotalForMember(loginService.getUser());
     }
 
     private void persist(ShoppingCart shoppingCart) {

@@ -34,10 +34,18 @@
                                th:id="${cart.key.isbn}"/>
                     </div>
                 </td>
-                <td th:text="${cart.key.getPrice()}"></td>
-                <td th:text="${cart.key.getPrice().multiply(cart.value)}"></td>
+                <td th:text="'$'+${#numbers.formatDecimal(cart.key.getPrice(), 0, 2)}"></td>
+                <td th:text="'$'+${#numbers.formatDecimal(cart.key.getPrice().multiply(cart.value), 0, 2)}"></td>
                 <td><input type="button" class="btn btn-danger remove-button" value="X" th:data="${cart.key.isbn}"/>
                 </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td th:text="'$'+${#numbers.formatDecimal(total, 0, 2)}"></td>
+                <td></td>
             </tr>
             </tbody>
         </table>

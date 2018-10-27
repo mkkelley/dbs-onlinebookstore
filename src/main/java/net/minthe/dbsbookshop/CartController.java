@@ -11,9 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -37,6 +35,7 @@ public class CartController {
         HashMap<Book, Integer> cartMap = cartService.getCart().getMap();
 
         model.addAttribute("cartMap", cartMap);
+        model.addAttribute("total", cartService.getTotal());
 
         return "cart/cart_view";
     }
