@@ -12,7 +12,8 @@ public class Order {
     @ManyToOne
     private Member userid;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "ORDER_SEQUENCE")
     private int ono;
     @Column(nullable=false)
     private Timestamp received;
