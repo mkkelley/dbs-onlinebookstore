@@ -1,32 +1,47 @@
 <!DOCTYPE html>
 <html th:replace="~{default :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Book List</title>
+    <title th:text="${subject}"></title>
 </head>
 <body>
 <section class="col-md-12">
+    <h1 th:text="${subject}"></h1>
+    <div class="row">
+        <div class="col-md-1">
+            <a class="btn btn-outline-primary"
+               th:if="${hasPrevPage}"
+               th:href="@{/book/subject/{sbj}(sbj=${subject}, page=${prevPage})}"
+               th:text="'Previous Page'"></a>
+        </div>
+        <div class="col-md-10"></div>
+        <div class="col-md-1">
+            <a class="btn btn-outline-primary"
+               th:if="${hasNextPage}"
+               th:href="@{/book/subject/{sbj}(sbj=${subject}, page=${nextPage})}"
+               th:text="'Next Page'"></a>
+        </div>
+    </div>
     <table class="table">
         <thead>
         <tr>
             <th>ISBN</th>
             <th>Title</th>
             <th>Author</th>
-            <th>Subject</th>
             <th>Price</th>
-            <th>Actions</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
-
         <tr th:each="book : ${books}">
             <td>
                 <a th:href="@{/book/{isbn}(isbn=${book.isbn})}" th:text="${book.isbn}"></a>
             </td>
             <td th:text="${book.title}"></td>
             <td th:text="${book.author}"></td>
-            <td th:text="${book.subject}"></td>
             <td th:text="'$'+${#numbers.formatDecimal(book.price, 0, 2)}"></td>
-            <td><button class="btn btn-info addCartButton" th:data="${book.isbn}">Add to Cart</button>  </td>
+            <td>
+                <button class="btn btn-info addCartButton" th:data="${book.isbn}">Add to Cart</button>
+            </td>
         </tr>
         </tbody>
     </table>

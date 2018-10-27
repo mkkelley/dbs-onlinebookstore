@@ -15,8 +15,15 @@
     </button>
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" th:text="Books" th:href="@{/book}"></a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Books
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:text="'All Books'" th:href="@{/book}"></a>
+                    <a class="dropdown-item" th:text="'By Subject'" th:href="@{/book/subject}"></a>
+                </div>
             </li>
             <li class="nav-item">
                 <a class="nav-link" th:text="Members" th:href="@{/member}"></a>

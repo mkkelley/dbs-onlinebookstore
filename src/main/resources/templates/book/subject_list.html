@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html th:replace="~{default :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TITLE HERE</title>
+</head>
+<body>
+<section class="col-md-12">
+
+    <div th:if="${subjects.size() > 0}">
+        <div class="row" th:each="index : ${#numbers.sequence(0, subjects.size(), 4)}">
+            <div class="col-md-3" th:if="${index < subjects.size()}">
+                <a class="btn-link btn"
+                   th:href="@{/book/subject/{sbj}(sbj=${subjects.get(index)})}"
+                   th:text="${subjects.get(index)}"></a>
+            </div>
+            <div class="col-md-3" th:if="${index + 1 < subjects.size()}">
+                <a class="btn-link btn"
+                   th:href="@{/book/subject/{sbj}(sbj=${subjects.get(index + 1)})}"
+                   th:text="${subjects.get(index + 1)}"></a>
+            </div>
+            <div class="col-md-3" th:if="${index + 2 < subjects.size()}">
+                <a class="btn-link btn"
+                   th:href="@{/book/subject/{sbj}(sbj=${subjects.get(index + 2)})}"
+                   th:text="${subjects.get(index + 2)}"></a>
+            </div>
+            <div class="col-md-3" th:if="${index + 3 < subjects.size()}">
+                <a class="btn-link btn"
+                   th:href="@{/book/subject/{sbj}(sbj=${subjects.get(index + 3)})}"
+                   th:text="${subjects.get(index)}"></a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

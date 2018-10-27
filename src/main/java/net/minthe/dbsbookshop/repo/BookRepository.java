@@ -1,6 +1,8 @@
 package net.minthe.dbsbookshop.repo;
 
 import net.minthe.dbsbookshop.model.Book;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,4 +16,6 @@ import java.util.List;
 public interface BookRepository extends CrudRepository<Book, String> {
     @Query(value="select distinct subject from books", nativeQuery = true)
     List<String> listDistinctSubject();
+
+    Page<Book> findBooksBySubjectIgnoreCase(String subject, Pageable pageable);
 }
