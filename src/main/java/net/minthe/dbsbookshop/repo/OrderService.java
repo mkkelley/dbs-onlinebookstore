@@ -1,0 +1,68 @@
+package net.minthe.dbsbookshop.repo;
+
+import net.minthe.dbsbookshop.model.Order;
+import net.minthe.dbsbookshop.model.Cart;
+import net.minthe.dbsbookshop.model.Member;
+import net.minthe.dbsbookshop.model.OrderDetails;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Michael Kelley on 10/26/2018
+ */
+@Service
+public class OrderService {
+    private final OrderRepository orderRepository;
+    private final OrderDetailsRepository orderDetailsRepository;
+    private final CartRepository cartRepository;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository, CartRepository cartRepository, OrderDetailsRepository orderDetailsRepository) {
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+        this.orderDetailsRepository = orderDetailsRepository;
+    }
+
+    public Order oneClickOrder(Member member, Timestamp received) {
+        return generateOrder(
+                member,
+                received,
+                member.getAddress(),
+                member.getCity(),
+                member.getState(),
+                member.getZip()
+        );
+    }
+
+    public Order generateOrder(
+            Member member,
+            Timestamp received,
+            String shipAddress,
+            String shipCity,
+            String shipState,
+            int zip) {
+        Order order = new Order();
+        order.setUserid(member);
+        order.setReceived(received);
+        order.setShipAddress(shipAddress);
+        order.setShipCity(shipCity);
+        order.setShipState(shipState);
+        order.setShipZip(zip);
+
+        order = orderRepository.save(order);
+
+        List<Cart> cartList = cartRepository.findByUserid(member);
+        List<OrderDetails> orderDetailsList = new ArrayList<>();
+        for (Cart c : cartList) {
+            OrderDetails orderDetails = new OrderDetails(order, c);
+            orderDetailsList.add(orderDetails);
+        }
+
+        orderDetailsRepository.saveAll(orderDetailsList);
+        return order;
+    }
+}

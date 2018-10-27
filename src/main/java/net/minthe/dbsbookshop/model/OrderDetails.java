@@ -32,6 +32,13 @@ public class OrderDetails {
         this.price = price;
     }
 
+    public OrderDetails(Order order, Cart cart) {
+        this.ono = order;
+        this.isbn = cart.getIsbn();
+        this.price = cart.getIsbn().getPrice();
+        this.qty = cart.getQty();
+    }
+
     public OrderDetails() {}
 
     @Override

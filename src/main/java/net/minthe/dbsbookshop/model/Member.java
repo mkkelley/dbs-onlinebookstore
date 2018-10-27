@@ -22,7 +22,7 @@ public class Member {
     @Column(nullable = false)
     private String state;
     @Column(nullable = false)
-    private String zip;
+    private int zip;
 
     private String phone;
     private String email;
@@ -33,7 +33,7 @@ public class Member {
     private String creditcardtype;
     private String creditcardnumber;
 
-    public Member(String fname, String lname, String address, String city, String state, String zip, String phone, String email, String userid, String password, String creditcardtype, String creditcardnumber) {
+    public Member(String fname, String lname, String address, String city, String state, int zip, String phone, String email, String userid, String password, String creditcardtype, String creditcardnumber) {
         this.fname = fname;
         this.lname = lname;
         this.address = address;
@@ -90,11 +90,11 @@ public class Member {
         this.state = state;
     }
 
-    public String getZip() {
+    public int getZip() {
         return zip;
     }
 
-    public void setZip(String zip) {
+    public void setZip(int zip) {
         this.zip = zip;
     }
 
@@ -176,7 +176,7 @@ public class Member {
         if (!address.equals(member.address)) return false;
         if (!city.equals(member.city)) return false;
         if (!state.equals(member.state)) return false;
-        if (!zip.equals(member.zip)) return false;
+        if (zip != member.zip) return false;
         if (phone != null ? !phone.equals(member.phone) : member.phone != null) return false;
         if (email != null ? !email.equals(member.email) : member.email != null) return false;
         if (userid != null ? !userid.equals(member.userid) : member.userid != null) return false;
@@ -193,7 +193,7 @@ public class Member {
         result = 31 * result + address.hashCode();
         result = 31 * result + city.hashCode();
         result = 31 * result + state.hashCode();
-        result = 31 * result + zip.hashCode();
+        result = 31 * result + Integer.hashCode(zip);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (userid != null ? userid.hashCode() : 0);

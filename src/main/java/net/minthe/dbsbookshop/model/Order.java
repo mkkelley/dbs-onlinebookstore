@@ -12,6 +12,7 @@ public class Order {
     @ManyToOne
     private Member userid;
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_SEQUENCE")
     private int ono;
     @Column(nullable=false)
     private Timestamp received;
@@ -19,9 +20,9 @@ public class Order {
     private String shipAddress;
     private String shipCity;
     private String shipState;
-    private String shipZip;
+    private int shipZip;
 
-    public Order(Member userid, int ono, Timestamp received, Timestamp shipped, String shipAddress, String shipCity, String shipState, String shipZip) {
+    public Order(Member userid, int ono, Timestamp received, Timestamp shipped, String shipAddress, String shipCity, String shipState, int shipZip) {
         this.userid = userid;
         this.ono = ono;
         this.received = received;
@@ -104,11 +105,11 @@ public class Order {
         this.shipState = shipState;
     }
 
-    public String getShipZip() {
+    public int getShipZip() {
         return shipZip;
     }
 
-    public void setShipZip(String shipZip) {
+    public void setShipZip(int shipZip) {
         this.shipZip = shipZip;
     }
 
@@ -126,7 +127,7 @@ public class Order {
         if (shipAddress != null ? !shipAddress.equals(order.shipAddress) : order.shipAddress != null) return false;
         if (shipCity != null ? !shipCity.equals(order.shipCity) : order.shipCity != null) return false;
         if (shipState != null ? !shipState.equals(order.shipState) : order.shipState != null) return false;
-        return shipZip != null ? shipZip.equals(order.shipZip) : order.shipZip == null;
+        return shipZip == order.shipZip;
     }
 
     @Override
@@ -138,7 +139,7 @@ public class Order {
         result = 31 * result + (shipAddress != null ? shipAddress.hashCode() : 0);
         result = 31 * result + (shipCity != null ? shipCity.hashCode() : 0);
         result = 31 * result + (shipState != null ? shipState.hashCode() : 0);
-        result = 31 * result + (shipZip != null ? shipZip.hashCode() : 0);
+        result = 31 * result + Integer.hashCode(shipZip);
         return result;
     }
 }
