@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{default :: layout(~{::title}, ~{::section})}">
+<head>
+    <meta charset="UTF-8">
+    <title>New Member</title>
+</head>
+<body>
+<section class="col-md-12">
+    <form th:action="@{/order/new}"
+          th:object="${order}"
+          name="f"
+          method="post">
+        <fieldset>
+
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="shipAddress">Shipping Address:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="shipAddress" type="text" name="shipAddress" class="form-control"
+                           th:field="*{shipAddress}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="shipCity">Shipping City:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="shipCity" type="text" name="shipCity" class="form-control" th:field="*{shipCity}"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 form-group">
+                    <label for="shipState">Shipping State:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="shipState" type="text" name="shipState" class="form-control" th:field="*{shipState}"/>
+                </div>
+                <div class="col-md-3 form-group">
+                    <label for="shipZip">Shiping Zip:</label>
+                </div>
+                <div class="col-md-3 form-group">
+                    <input id="shipZip" type="text" name="shipZip" class="form-control" th:field="*{shipZip}"/>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-warning"/>
+        </fieldset>
+    </form>
+</section>
+</body>
+</html>

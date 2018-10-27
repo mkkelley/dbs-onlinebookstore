@@ -29,6 +29,9 @@
             <li class="nav-item">
                 <a class="nav-link" th:text="Members" th:href="@{/member}"></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" th:text="Orders" th:href="@{/order}"></a>
+            </li>
         </ul>
         <ul class="navbar-nav ml-auto" th:if="${!@loginService.userLoggedIn()}">
             <li class="navbar-item">
@@ -38,6 +41,12 @@
         <ul class="navbar-nav ml-auto" th:if="${@loginService.userLoggedIn()}">
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/cart}">Cart</a>
+            </li>
+            <li class="nav-item">
+                <form action="/order/new" method="post">
+                    <input type="submit" class="btn btn-dark" value="One Click Checkout"/>
+                    <input type="hidden" name="oneClick" value="true"/>
+                </form>
             </li>
             <li class="nav-item">
                 <a class="nav-link active"

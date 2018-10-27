@@ -2,28 +2,38 @@ package net.minthe.dbsbookshop.model;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Michael Kelley on 10/14/2018
  */
 @Entity
-@Table(name="orders")
+@Table(name = "orders")
 public class Order {
     @ManyToOne
+    @JoinColumn(name = "userid")
     private Member userid;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "ORDER_SEQUENCE")
-    private int ono;
-    @Column(nullable=false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_SEQUENCE")
+    @SequenceGenerator(name = "ORDER_SEQUENCE", sequenceName = "ORDER_SEQUENCE")
+    private long ono;
+    @Column(nullable = false)
     private Timestamp received;
     private Timestamp shipped;
+    @Column(name = "shipaddress")
     private String shipAddress;
+    @Column(name = "shipcity")
     private String shipCity;
+    @Column(name = "shipstate")
     private String shipState;
+    @Column(name = "shipzip")
     private int shipZip;
 
-    public Order(Member userid, int ono, Timestamp received, Timestamp shipped, String shipAddress, String shipCity, String shipState, int shipZip) {
+    @OneToMany(mappedBy = "ono")
+    private List<OrderDetails> orderDetailsList = new ArrayList<>();
+
+    public Order(Member userid, long ono, Timestamp received, Timestamp shipped, String shipAddress, String shipCity, String shipState, int shipZip) {
         this.userid = userid;
         this.ono = ono;
         this.received = received;
@@ -50,6 +60,10 @@ public class Order {
                 '}';
     }
 
+    public List<OrderDetails> getOrderDetailsList() {
+        return orderDetailsList;
+    }
+
     public Member getUserid() {
         return userid;
     }
@@ -58,11 +72,11 @@ public class Order {
         this.userid = userid;
     }
 
-    public int getOno() {
+    public long getOno() {
         return ono;
     }
 
-    public void setOno(int ono) {
+    public void setOno(long ono) {
         this.ono = ono;
     }
 
@@ -134,7 +148,7 @@ public class Order {
     @Override
     public int hashCode() {
         int result = userid.hashCode();
-        result = 31 * result + ono;
+        result = 31 * result + Long.hashCode(ono);
         result = 31 * result + received.hashCode();
         result = 31 * result + (shipped != null ? shipped.hashCode() : 0);
         result = 31 * result + (shipAddress != null ? shipAddress.hashCode() : 0);

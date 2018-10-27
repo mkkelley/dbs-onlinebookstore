@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html th:replace="~{default :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TITLE HERE</title>
+</head>
+<body>
+<section class="col-md-12">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Order Number</th>
+            <th>Received Date</th>
+            <th>Shipped Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orders}">
+            <td>
+                <a th:href="@{/order/{oid}(oid=${order.getOno()})}" th:text="${order.getOno()}"></a>
+            </td>
+            <td th:text="${order.getReceived()}"></td>
+            <td th:text="${order.getShipped()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

@@ -6,21 +6,21 @@ import java.io.Serializable;
  * Created by Michael Kelley on 10/14/2018
  */
 public class OrderDetailsKey implements Serializable {
-    private int ono;
+    private long ono;
     private String isbn;
 
-    public OrderDetailsKey(int order, String isbn) {
+    public OrderDetailsKey(long order, String isbn) {
         this.ono = order;
         this.isbn = isbn;
     }
 
     public OrderDetailsKey() {}
 
-    public int getOrder() {
+    public long getOrder() {
         return ono;
     }
 
-    public void setOrder(int order) {
+    public void setOrder(long order) {
         this.ono = order;
     }
 
@@ -45,7 +45,7 @@ public class OrderDetailsKey implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = ono;
+        int result = Long.hashCode(ono);
         result = 31 * result + isbn.hashCode();
         return result;
     }

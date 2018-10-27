@@ -6,23 +6,25 @@ import java.math.BigDecimal;
 /**
  * Created by Michael Kelley on 10/14/2018
  */
-@Entity(name="OrderDetails")
-@Table(name="odetails")
+@Entity(name = "OrderDetails")
+@Table(name = "odetails")
 @IdClass(OrderDetailsKey.class)
 public class OrderDetails {
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "ono")
     private Order ono;
 
     @Id
     @ManyToOne
+    @JoinColumn(name = "isbn")
     private Book isbn;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private int qty;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     private BigDecimal price;
 
     public OrderDetails(Order ono, Book isbn, int qty, BigDecimal price) {
