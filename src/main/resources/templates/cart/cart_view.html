@@ -39,7 +39,7 @@
                 <td><input type="button" class="btn btn-danger remove-button" value="X" th:data="${cart.key.isbn}"/>
                 </td>
             </tr>
-            <tr>
+            <tr th:if="${cartMap.size() > 0}">
                 <td></td>
                 <td></td>
                 <td></td>
@@ -49,7 +49,7 @@
             </tr>
             </tbody>
         </table>
-        <div class="form-group">
+        <div class="form-group" th:if="${cartMap.size() > 0}">
             <input type="submit" class="btn btn-warning form-control"
                    value="Update"/>
         </div>

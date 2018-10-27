@@ -50,6 +50,9 @@ public class OrderController {
 
     @PostMapping("/order/new")
     public String submitOrder(@Valid @ModelAttribute OrderSubmission orderSubmission) {
+        if (!orderService.canOrder(loginService.getUser())) {
+            return "redirect:/cart";
+        }
         Order order;
         if (orderSubmission.isOneClick()) {
             order = orderService.oneClickOrder(

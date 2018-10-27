@@ -38,6 +38,11 @@ public class OrderService {
         );
     }
 
+    public boolean canOrder(Member member) {
+        return cartRepository.findByUserid(member).size() > 0;
+
+    }
+
     public Order generateOrder(
             Member member,
             Timestamp received,
@@ -60,6 +65,7 @@ public class OrderService {
         for (Cart c : cartList) {
             OrderDetails orderDetails = new OrderDetails(order, c);
             orderDetailsList.add(orderDetails);
+            cartRepository.delete(c);
         }
 
         orderDetailsRepository.saveAll(orderDetailsList);
