@@ -1,4 +1,7 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.cart;
+
+import net.minthe.dbsbookshop.book.Book;
+import net.minthe.dbsbookshop.member.Member;
 
 import java.util.ArrayList;
 import java.util.HashMap;

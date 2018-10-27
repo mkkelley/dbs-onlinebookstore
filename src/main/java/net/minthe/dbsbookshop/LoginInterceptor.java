@@ -1,6 +1,6 @@
 package net.minthe.dbsbookshop;
 
-import net.minthe.dbsbookshop.repo.LoginService;
+import net.minthe.dbsbookshop.member.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;

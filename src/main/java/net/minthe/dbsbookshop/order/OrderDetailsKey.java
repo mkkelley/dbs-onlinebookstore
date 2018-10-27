@@ -1,4 +1,4 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.order;
 
 import java.io.Serializable;
 

@@ -1,7 +1,5 @@
-package net.minthe.dbsbookshop.repo;
+package net.minthe.dbsbookshop.order;
 
-import net.minthe.dbsbookshop.model.OrderDetails;
-import net.minthe.dbsbookshop.model.OrderDetailsKey;
 import org.springframework.data.repository.CrudRepository;
 
 /**

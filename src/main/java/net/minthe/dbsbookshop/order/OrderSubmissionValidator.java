@@ -1,4 +1,4 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.order;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

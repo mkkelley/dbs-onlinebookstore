@@ -1,7 +1,5 @@
-package net.minthe.dbsbookshop;
+package net.minthe.dbsbookshop.book;
 
-import net.minthe.dbsbookshop.model.Book;
-import net.minthe.dbsbookshop.repo.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

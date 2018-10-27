@@ -1,4 +1,4 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.member;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

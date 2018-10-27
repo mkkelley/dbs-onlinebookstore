@@ -1,4 +1,6 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.order;
+
+import net.minthe.dbsbookshop.member.Member;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

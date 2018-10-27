@@ -1,6 +1,4 @@
-package net.minthe.dbsbookshop.model;
-
-import javax.validation.Constraint;
+package net.minthe.dbsbookshop.order;
 
 /**
  * Created by Michael Kelley on 10/26/2018

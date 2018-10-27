@@ -1,13 +1,8 @@
-package net.minthe.dbsbookshop;
+package net.minthe.dbsbookshop.order;
 
-import net.minthe.dbsbookshop.model.Member;
-import net.minthe.dbsbookshop.model.Order;
-import net.minthe.dbsbookshop.model.OrderSubmission;
-import net.minthe.dbsbookshop.model.OrderSubmissionValidator;
-import net.minthe.dbsbookshop.repo.LoginService;
-import net.minthe.dbsbookshop.repo.MemberRepository;
-import net.minthe.dbsbookshop.repo.OrderRepository;
-import net.minthe.dbsbookshop.repo.OrderService;
+import net.minthe.dbsbookshop.member.Member;
+import net.minthe.dbsbookshop.member.LoginService;
+import net.minthe.dbsbookshop.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

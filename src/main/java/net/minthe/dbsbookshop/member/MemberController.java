@@ -1,7 +1,7 @@
-package net.minthe.dbsbookshop;
+package net.minthe.dbsbookshop.member;
 
-import net.minthe.dbsbookshop.model.Member;
-import net.minthe.dbsbookshop.repo.MemberRepository;
+import net.minthe.dbsbookshop.member.Member;
+import net.minthe.dbsbookshop.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

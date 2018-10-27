@@ -1,4 +1,4 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.cart;
 
 import java.io.Serializable;
 

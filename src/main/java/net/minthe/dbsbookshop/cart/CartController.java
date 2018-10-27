@@ -1,9 +1,8 @@
-package net.minthe.dbsbookshop;
+package net.minthe.dbsbookshop.cart;
 
-import net.minthe.dbsbookshop.model.Book;
-import net.minthe.dbsbookshop.repo.BookRepository;
-import net.minthe.dbsbookshop.repo.CartService;
-import net.minthe.dbsbookshop.repo.LoginService;
+import net.minthe.dbsbookshop.book.Book;
+import net.minthe.dbsbookshop.book.BookRepository;
+import net.minthe.dbsbookshop.member.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

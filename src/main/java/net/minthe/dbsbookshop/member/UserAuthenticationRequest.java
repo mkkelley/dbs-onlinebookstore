@@ -1,4 +1,4 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.member;
 
 /**
  * Created by Michael Kelley on 10/22/2018

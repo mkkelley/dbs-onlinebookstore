@@ -1,8 +1,6 @@
-package net.minthe.dbsbookshop.repo;
+package net.minthe.dbsbookshop.cart;
 
-import net.minthe.dbsbookshop.model.Cart;
-import net.minthe.dbsbookshop.model.CartKey;
-import net.minthe.dbsbookshop.model.Member;
+import net.minthe.dbsbookshop.member.Member;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

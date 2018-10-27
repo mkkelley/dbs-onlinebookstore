@@ -1,6 +1,6 @@
-package net.minthe.dbsbookshop.repo;
+package net.minthe.dbsbookshop.book;
 
-import net.minthe.dbsbookshop.model.Book;
+import net.minthe.dbsbookshop.book.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

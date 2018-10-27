@@ -1,4 +1,7 @@
-package net.minthe.dbsbookshop.model;
+package net.minthe.dbsbookshop.order;
+
+import net.minthe.dbsbookshop.book.Book;
+import net.minthe.dbsbookshop.cart.Cart;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

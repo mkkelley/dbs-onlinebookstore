@@ -1,9 +1,7 @@
-package net.minthe.dbsbookshop.repo;
+package net.minthe.dbsbookshop.cart;
 
-import net.minthe.dbsbookshop.model.Book;
-import net.minthe.dbsbookshop.model.Cart;
-import net.minthe.dbsbookshop.model.Member;
-import net.minthe.dbsbookshop.model.ShoppingCart;
+import net.minthe.dbsbookshop.book.Book;
+import net.minthe.dbsbookshop.member.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

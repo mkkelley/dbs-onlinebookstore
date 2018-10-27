@@ -1,6 +1,5 @@
-package net.minthe.dbsbookshop.repo;
+package net.minthe.dbsbookshop.member;
 
-import net.minthe.dbsbookshop.model.Member;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
