@@ -45,7 +45,6 @@ public class BookController {
                                      Model model) {
         Page<Book> books = bookRepository.findBooksBySubjectIgnoreCase(subject, PageRequest.of(page, size));
 
-
         model.addAttribute("books", books);
         model.addAttribute("subject", subject);
         model.addAttribute("nextPage", page + 1);
@@ -55,4 +54,48 @@ public class BookController {
 
         return "book/subject_view";
     }
+
+    @GetMapping("/book/search")
+    public String searchPage() {
+        return "book/search";
+    }
+
+    @GetMapping("/book/author_search")
+    public String searchBooksByAuthor(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                      @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+                                      @RequestParam(value = "author") String author,
+                                      Model model) {
+        Page<Book> books = bookRepository.findBooksByAuthorLikeIgnoreCase(
+                "%" + author + "%",
+                PageRequest.of(page, size));
+
+        model.addAttribute("books", books);
+        model.addAttribute("author", author);
+        model.addAttribute("nextPage", page + 1);
+        model.addAttribute("hasNextPage", books.hasNext());
+        model.addAttribute("prevPage", page - 1);
+        model.addAttribute("hasPrevPage", books.hasPrevious());
+
+        return "book/author_view";
+    }
+
+    @GetMapping("/book/title_search")
+    public String searchBooksByTitle(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                     @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+                                     @RequestParam(value = "title") String title,
+                                     Model model) {
+        Page<Book> books = bookRepository.findBooksByTitleLikeIgnoreCase(
+                "%" + title + "%",
+                PageRequest.of(page, size));
+
+        model.addAttribute("books", books);
+        model.addAttribute("book_title", title);
+        model.addAttribute("nextPage", page + 1);
+        model.addAttribute("hasNextPage", books.hasNext());
+        model.addAttribute("prevPage", page - 1);
+        model.addAttribute("hasPrevPage", books.hasPrevious());
+
+        return "book/title_view";
+    }
+
 }

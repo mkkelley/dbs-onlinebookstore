@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html th:replace="~{default :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${subject}"></title>
+    <title th:text="'Books by '+${author}"></title>
 </head>
 <body>
-<section class="col-md-12" th:with="hideSubject=true">
-    <h1 th:text="${subject}"></h1>
+<section class="col-md-12">
+    <h1 th:text="'Books by '+${author}"></h1>
     <div class="row">
         <div class="col-md-1">
             <a class="btn btn-outline-primary"
                th:if="${hasPrevPage}"
-               th:href="@{/book/subject/{sbj}(sbj=${subject}, page=${prevPage})}"
+               th:href="@{/book/author_search(author=${author}, page=${prevPage})}"
                th:text="'Previous Page'"></a>
         </div>
         <div class="col-md-10"></div>
         <div class="col-md-1">
             <a class="btn btn-outline-primary"
                th:if="${hasNextPage}"
-               th:href="@{/book/subject/{sbj}(sbj=${subject}, page=${nextPage})}"
+               th:href="@{/book/author_search(author=${author}, page=${nextPage})}"
                th:text="'Next Page'"></a>
         </div>
     </div>

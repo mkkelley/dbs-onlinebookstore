@@ -5,31 +5,7 @@
 </head>
 <body>
 <section class="col-md-12">
-    <table class="table">
-        <thead>
-        <tr>
-            <th>ISBN</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Subject</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        <tr th:each="book : ${books}">
-            <td>
-                <a th:href="@{/book/{isbn}(isbn=${book.isbn})}" th:text="${book.isbn}"></a>
-            </td>
-            <td th:text="${book.title}"></td>
-            <td th:text="${book.author}"></td>
-            <td th:text="${book.subject}"></td>
-            <td th:text="'$'+${#numbers.formatDecimal(book.price, 0, 2)}"></td>
-            <td><button class="btn btn-info addCartButton" th:data="${book.isbn}">Add to Cart</button>  </td>
-        </tr>
-        </tbody>
-    </table>
+    <table th:replace="book/table :: book_table"></table>
     <script th:src="@{/book.js}"></script>
 </section>
 </body>

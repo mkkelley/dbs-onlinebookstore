@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html th:replace="~{default :: layout(~{::title}, ~{::section})}" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TITLE HERE</title>
+</head>
+<body>
+<section class="col-md-12">
+    <h1>Book Search</h1>
+    <form method="get"
+          th:action="@{/book/author_search}">
+        <div class="form-group">
+            <label for="author">Search by Author</label>
+            <input class="form-control" type="text" name="author" id="author"/>
+            <input class="btn btn-primary" type="submit" value="Search"/>
+        </div>
+    </form>
+    <form method="get"
+          th:action="@{/book/title_search}">
+        <div class="form-group">
+            <label for="title">Search by Title</label>
+            <input class="form-control" type="text" name="title" id="title"/>
+            <input class="btn btn-primary" type="submit" value="Search"/>
+        </div>
+    </form>
+</section>
+</body>
+</html>

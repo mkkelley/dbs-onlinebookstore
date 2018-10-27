@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<table class="table" th:fragment="book_table">
+    <thead>
+    <tr>
+        <th>ISBN</th>
+        <th>Title</th>
+        <th th:if="!${hideAuthor}">Author</th>
+        <th th:if="!${hideSubject}">Subject</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="book : ${books}">
+        <td>
+            <a th:href="@{/book/{isbn}(isbn=${book.isbn})}" th:text="${book.isbn}"></a>
+        </td>
+        <td th:text="${book.title}"></td>
+        <td th:if="!${hideAuthor}" th:text="${book.author}"></td>
+        <td th:if="!${hideSubject}" th:text="${book.subject}"></td>
+        <td th:text="'$'+${#numbers.formatDecimal(book.price, 0, 2)}"></td>
+        <td>
+            <button class="btn btn-info addCartButton" th:data="${book.isbn}">Add to Cart</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -18,4 +18,8 @@ public interface BookRepository extends CrudRepository<Book, String> {
     List<String> listDistinctSubject();
 
     Page<Book> findBooksBySubjectIgnoreCase(String subject, Pageable pageable);
+
+    Page<Book> findBooksByAuthorLikeIgnoreCase(String author, Pageable pageable);
+
+    Page<Book> findBooksByTitleLikeIgnoreCase(String title, Pageable pageable);
 }
