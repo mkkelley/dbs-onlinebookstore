@@ -8,7 +8,7 @@
 <body>
 <section class="col-md-12">
     <form th:action="@{/member/new}"
-          th:object="${member}"
+          th:object="${memberForm}"
           name = "f"
           method="post">
         <fieldset>
@@ -18,12 +18,14 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="userid" type="text" name="userid" class="form-control" th:field="*{userid}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}"></span>
                 </div>
                 <div class="col-md-3 form-group">
                     <label for="password">Password: </label>
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="password" type="text" name="password" class="form-control" th:field="*{password}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
             </div>
         </fieldset>

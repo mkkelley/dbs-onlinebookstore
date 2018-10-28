@@ -10,12 +10,14 @@
             </div>
             <div class="col-md-3 form-group">
                 <input id="fname" type="text" name="fname" class="form-control" th:field="*{fname}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('fname')}" th:errors="*{fname}"></span>
             </div>
             <div class="col-md-3 form-group">
                 <label for="lname">Last Name:</label>
             </div>
             <div class="col-md-3 form-group">
                 <input id="lname" type="text" name="lname" class="form-control" th:field="*{lname}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('lname')}" th:errors="*{lname}"></span>
             </div>
         </div>
         <div class="row form-group">
@@ -24,12 +26,14 @@
             </div>
             <div class="col-md-3 form-group">
                 <input id="address" type="text" name="address" class="form-control" th:field="*{address}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
             </div>
             <div class="col-md-3 form-group">
                 <label for="city">City:</label>
             </div>
             <div class="col-md-3 form-group">
                 <input id="city" type="text" name="city" class="form-control" th:field="*{city}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></span>
             </div>
         </div>
         <div class="row form-group">
@@ -38,12 +42,14 @@
             </div>
             <div class="col-md-3 form-group">
                 <input id="state" type="text" name="state" class="form-control" th:field="*{state}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('state')}" th:errors="*{state}"></span>
             </div>
             <div class="col-md-3 form-group">
                 <label for="zip">Zip Code:</label>
             </div>
             <div class="col-md-3 form-group">
                 <input id="zip" type="text" name="zip" class="form-control" th:field="*{zip}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('zip')}" th:errors="*{zip}"></span>
             </div>
         </div>
 
@@ -53,12 +59,14 @@
             </div>
             <div class="col-md-3 form-group">
                 <input id="phone" type="text" name="phone" class="form-control" th:field="*{phone}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
             </div>
             <div class="col-md-3 form-group">
                 <label for="email">Email Address:</label>
             </div>
             <div class="col-md-3 form-group">
                 <input id="email" type="text" name="email" class="form-control" th:field="*{email}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
             </div>
         </div>
         <div class="row">
@@ -68,6 +76,8 @@
             <div class="col-md-3 form-group">
                 <input id="creditcardnumber" type="text" name="creditcardnumber" class="form-control"
                        th:field="*{creditcardnumber}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('creditcardnumber')}"
+                      th:errors="*{creditcardnumber}"></span>
             </div>
             <div class="col-md-3 form-group">
                 <label for="creditcardtype">Credit Card Type (optional):</label>
@@ -75,6 +85,8 @@
             <div class="col-md-3 form-group">
                 <input id="creditcardtype" type="text" name="creditcardtype" class="form-control"
                        th:field="*{creditcardtype}"/>
+                <span class="text-danger" th:if="${#fields.hasErrors('creditcardtype')}"
+                      th:errors="*{creditcardtype}"></span>
             </div>
         </div>
         <div class="row form-group">

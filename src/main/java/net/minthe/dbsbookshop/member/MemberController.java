@@ -1,13 +1,13 @@
 package net.minthe.dbsbookshop.member;
 
-import net.minthe.dbsbookshop.member.Member;
-import net.minthe.dbsbookshop.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 /**
@@ -17,9 +17,18 @@ import java.util.Optional;
 public class MemberController {
 
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
 
     @Autowired
-    public MemberController(MemberRepository memberRepository) {this.memberRepository = memberRepository;}
+    public MemberController(MemberRepository memberRepository, MemberService memberService, MemberFormValidator memberFormValidator) {
+        this.memberRepository = memberRepository;
+        this.memberService = memberService;
+    }
+
+    @InitBinder("memberForm")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new MemberFormValidator(memberRepository));
+    }
 
     @GetMapping(value = "/member")
     public String listMembers(Model model) {
@@ -29,21 +38,20 @@ public class MemberController {
         return "member/member_list";
     }
 
-    @RequestMapping(value = "/member/new", method = RequestMethod.GET)
+    @GetMapping(value = "/member/new")
     public String newMember(Model model) {
-        Member m = new Member();
-        model.addAttribute("member", m);
+        MemberForm m = new MemberForm();
+        model.addAttribute("memberForm", m);
         return "member/member_new";
     }
 
-    @RequestMapping(value = "/member/new", method = RequestMethod.POST)
-    public String createMember(@ModelAttribute Member member, RedirectAttributes redirectAttributes) {
-        try {
-            memberRepository.save(member);
-            redirectAttributes.addFlashAttribute("message", "You have registered successfully. Please log in.");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("message", "Unable to register user. Please enter valid information.");
+    @PostMapping(value = "/member/new")
+    public String createMember(@Valid @ModelAttribute MemberForm memberForm,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "member/member_new";
         }
+        memberService.createMember(memberForm);
         return "redirect:/login";
     }
 
