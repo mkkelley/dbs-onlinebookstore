@@ -45,10 +45,7 @@ public class BookController {
 
         model.addAttribute("books", books);
         model.addAttribute("subject", subject);
-        model.addAttribute("nextPage", page + 1);
-        model.addAttribute("hasNextPage", books.hasNext());
-        model.addAttribute("prevPage", page - 1);
-        model.addAttribute("hasPrevPage", books.hasPrevious());
+        addPaginationInformation(model, books);
 
         return "book/subject_view";
     }
@@ -69,10 +66,7 @@ public class BookController {
 
         model.addAttribute("books", books);
         model.addAttribute("author", author);
-        model.addAttribute("nextPage", page + 1);
-        model.addAttribute("hasNextPage", books.hasNext());
-        model.addAttribute("prevPage", page - 1);
-        model.addAttribute("hasPrevPage", books.hasPrevious());
+        addPaginationInformation(model, books);
 
         return "book/author_view";
     }
@@ -88,12 +82,16 @@ public class BookController {
 
         model.addAttribute("books", books);
         model.addAttribute("book_title", title);
-        model.addAttribute("nextPage", page + 1);
-        model.addAttribute("hasNextPage", books.hasNext());
-        model.addAttribute("prevPage", page - 1);
-        model.addAttribute("hasPrevPage", books.hasPrevious());
+        addPaginationInformation(model, books);
 
         return "book/title_view";
+    }
+
+    private void addPaginationInformation(Model model, Page<Book> books) {
+        model.addAttribute("nextPage", books.getPageable().getPageNumber() + 1);
+        model.addAttribute("hasNextPage", books.hasNext());
+        model.addAttribute("prevPage", books.getPageable().getPageNumber() - 1);
+        model.addAttribute("hasPrevPage", books.hasPrevious());
     }
 
 }

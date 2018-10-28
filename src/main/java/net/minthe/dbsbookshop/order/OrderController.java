@@ -1,7 +1,7 @@
 package net.minthe.dbsbookshop.order;
 
-import net.minthe.dbsbookshop.member.Member;
 import net.minthe.dbsbookshop.member.LoginService;
+import net.minthe.dbsbookshop.member.Member;
 import net.minthe.dbsbookshop.member.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +28,7 @@ public class OrderController {
 
     @InitBinder("orderSubmission")
     protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(new OrderSubmissionValidator());
+        binder.addValidators(new OrderFormValidator());
     }
 
     @Autowired
@@ -55,30 +55,30 @@ public class OrderController {
     }
 
     @PostMapping("/order/new")
-    public String submitOrder(@Valid @ModelAttribute OrderSubmission orderSubmission) {
+    public String submitOrder(@Valid @ModelAttribute OrderForm orderForm) {
         if (!orderService.canOrder(loginService.getUser())) {
             return "redirect:/cart";
         }
         Order order;
-        if (orderSubmission.isOneClick()) {
+        if (orderForm.isOneClick()) {
             order = orderService.oneClickOrder(
                     loginService.getUser(),
                     Timestamp.from(Instant.now())
             );
         } else {
-            if (orderSubmission.isNewCc()) {
+            if (orderForm.isNewCc()) {
                 Member m = loginService.getUser();
-                m.setCreditcardnumber(orderSubmission.getNewCcn());
-                m.setCreditcardtype(orderSubmission.getNewCcType());
+                m.setCreditcardnumber(orderForm.getNewCcn());
+                m.setCreditcardtype(orderForm.getNewCcType());
                 memberRepository.save(m);
             }
             order = orderService.generateOrder(
                     loginService.getUser(),
                     Timestamp.from(Instant.now()),
-                    orderSubmission.getShipAddress(),
-                    orderSubmission.getShipCity(),
-                    orderSubmission.getShipState(),
-                    orderSubmission.getShipZip());
+                    orderForm.getShipAddress(),
+                    orderForm.getShipCity(),
+                    orderForm.getShipState(),
+                    orderForm.getShipZip());
         }
 
         return "redirect:/order/" + order.getOno();
@@ -87,7 +87,7 @@ public class OrderController {
     @GetMapping("/order/new")
     public String newOrder(Model model) {
 
-        OrderSubmission order = new OrderSubmission();
+        OrderForm order = new OrderForm();
         model.addAttribute("order", order);
         return "order/order_new";
     }

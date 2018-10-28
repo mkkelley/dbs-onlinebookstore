@@ -2,8 +2,11 @@ package net.minthe.dbsbookshop.member;
 
 /**
  * Created by Michael Kelley on 10/28/2018
+ *
+ * This is the class used to represent unsanitized and unvalidated
+ * user input.
  */
-public class MemberForm {
+class MemberForm {
     private String fname;
     private String lname;
     private String address;
@@ -19,99 +22,99 @@ public class MemberForm {
     private String creditcardtype;
     private String creditcardnumber;
 
-    public String getFname() {
+    String getFname() {
         return fname;
     }
 
-    public void setFname(String fname) {
+    void setFname(String fname) {
         this.fname = fname;
     }
 
-    public String getLname() {
+    String getLname() {
         return lname;
     }
 
-    public void setLname(String lname) {
+    void setLname(String lname) {
         this.lname = lname;
     }
 
-    public String getAddress() {
+    String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    void setAddress(String address) {
         this.address = address;
     }
 
-    public String getCity() {
+    String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
+    void setCity(String city) {
         this.city = city;
     }
 
-    public String getState() {
+    String getState() {
         return state;
     }
 
-    public void setState(String state) {
+    void setState(String state) {
         this.state = state;
     }
 
-    public int getZip() {
+    int getZip() {
         return zip;
     }
 
-    public void setZip(int zip) {
+    void setZip(int zip) {
         this.zip = zip;
     }
 
-    public String getPhone() {
+    String getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public String getEmail() {
+    String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    void setEmail(String email) {
         this.email = email;
     }
 
-    public String getUserid() {
+    String getUserid() {
         return userid;
     }
 
-    public void setUserid(String userid) {
+    void setUserid(String userid) {
         this.userid = userid;
     }
 
-    public String getPassword() {
+    String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 
-    public String getCreditcardtype() {
+    String getCreditcardtype() {
         return creditcardtype;
     }
 
-    public void setCreditcardtype(String creditcardtype) {
+    void setCreditcardtype(String creditcardtype) {
         this.creditcardtype = creditcardtype;
     }
 
-    public String getCreditcardnumber() {
+    String getCreditcardnumber() {
         return creditcardnumber;
     }
 
-    public void setCreditcardnumber(String creditcardnumber) {
+    void setCreditcardnumber(String creditcardnumber) {
         this.creditcardnumber = creditcardnumber;
     }
 

@@ -2,10 +2,10 @@ package net.minthe.dbsbookshop.order;
 
 /**
  * Created by Michael Kelley on 10/26/2018
- *
- * DAO for Order
+ * <p>
+ * Class for user order creation, values are not trusted
  */
-public class OrderSubmission {
+class OrderForm {
     private boolean oneClick;
     private String shipAddress;
     private String shipCity;
@@ -15,80 +15,67 @@ public class OrderSubmission {
     private String newCcn;
     private String newCcType;
 
-    public OrderSubmission(boolean oneClick, String shipAddress, String shipCity, String shipState, int shipZip, boolean newCc, String newCcn, String newCcType) {
-        this.oneClick = oneClick;
-        this.shipAddress = shipAddress;
-        this.shipCity = shipCity;
-        this.shipState = shipState;
-        this.shipZip = shipZip;
-        this.newCc = newCc;
-        this.newCcn = newCcn;
-        this.newCcType = newCcType;
-    }
-
-    public OrderSubmission() {}
-
-    public String getNewCcn() {
+    String getNewCcn() {
         return newCcn;
     }
 
-    public void setNewCcn(String newCcn) {
+    void setNewCcn(String newCcn) {
         this.newCcn = newCcn;
     }
 
-    public String getNewCcType() {
+    String getNewCcType() {
         return newCcType;
     }
 
-    public void setNewCcType(String newCcType) {
+    void setNewCcType(String newCcType) {
         this.newCcType = newCcType;
     }
 
-    public boolean isNewCc() {
+    boolean isNewCc() {
         return newCc;
     }
 
-    public void setNewCc(boolean newCc) {
+    void setNewCc(boolean newCc) {
         this.newCc = newCc;
     }
 
-    public boolean isOneClick() {
+    boolean isOneClick() {
         return oneClick;
     }
 
-    public void setOneClick(boolean oneClick) {
+    void setOneClick(boolean oneClick) {
         this.oneClick = oneClick;
     }
 
-    public String getShipAddress() {
+    String getShipAddress() {
         return shipAddress;
     }
 
-    public void setShipAddress(String shipAddress) {
+    void setShipAddress(String shipAddress) {
         this.shipAddress = shipAddress;
     }
 
-    public String getShipCity() {
+    String getShipCity() {
         return shipCity;
     }
 
-    public void setShipCity(String shipCity) {
+    void setShipCity(String shipCity) {
         this.shipCity = shipCity;
     }
 
-    public String getShipState() {
+    String getShipState() {
         return shipState;
     }
 
-    public void setShipState(String shipState) {
+    void setShipState(String shipState) {
         this.shipState = shipState;
     }
 
-    public int getShipZip() {
+    int getShipZip() {
         return shipZip;
     }
 
-    public void setShipZip(int shipZip) {
+    void setShipZip(int shipZip) {
         this.shipZip = shipZip;
     }
 
@@ -97,7 +84,7 @@ public class OrderSubmission {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderSubmission that = (OrderSubmission) o;
+        OrderForm that = (OrderForm) o;
 
         if (oneClick != that.oneClick) return false;
         if (shipZip != that.shipZip) return false;
