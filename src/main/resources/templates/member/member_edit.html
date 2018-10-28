@@ -7,7 +7,7 @@
 </head>
 <body>
 <section class="col-md-12">
-    <form th:action="@{/member/new}"
+    <form th:action="@{/member/{uid}(uid=${member.userid})}"
           th:object="${member}"
           name = "f"
           method="post">

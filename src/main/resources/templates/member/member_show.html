@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://thymeleaf.org" th:replace="~{default :: layout(~{::title}, ~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{default :: layout(~{::title}, ~{::section})}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -54,6 +54,7 @@
         <div class="col-md-3" th:text="${member.email}">
         </div>
     </div>
+    <a class="btn btn-warning" th:href="@{/member/{uid}/edit(uid=${member.userid})}" th:text="'Edit'"></a>
 </section>
 
 </body>

@@ -1,7 +1,7 @@
 package net.minthe.dbsbookshop.order;
 
-import net.minthe.dbsbookshop.cart.CartRepository;
 import net.minthe.dbsbookshop.cart.Cart;
+import net.minthe.dbsbookshop.cart.CartRepository;
 import net.minthe.dbsbookshop.member.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +38,9 @@ public class OrderService {
     }
 
     public boolean canOrder(Member member) {
-        return cartRepository.findByUserid(member).size() > 0;
+        return cartRepository.findByUserid(member).size() > 0 &&
+                !member.getCreditcardnumber().equals("") &&
+                !member.getCreditcardtype().equals("");
 
     }
 
