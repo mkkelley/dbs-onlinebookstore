@@ -11,7 +11,7 @@
           th:object="${member}"
           name = "f"
           method="post">
-        <fieldset>
+        <fieldset th:with="submitValue='Update'">
             <div class="row">
                 <div class="col-md-3 form-group">
                     <label for="password">Password: </label>
