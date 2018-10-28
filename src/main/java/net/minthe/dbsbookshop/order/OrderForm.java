@@ -5,7 +5,7 @@ package net.minthe.dbsbookshop.order;
  * <p>
  * Class for user order creation, values are not trusted
  */
-class OrderForm {
+public class OrderForm {
     private boolean oneClick;
     private String shipAddress;
     private String shipCity;
@@ -15,67 +15,67 @@ class OrderForm {
     private String newCcn;
     private String newCcType;
 
-    String getNewCcn() {
+    public String getNewCcn() {
         return newCcn;
     }
 
-    void setNewCcn(String newCcn) {
+    public void setNewCcn(String newCcn) {
         this.newCcn = newCcn;
     }
 
-    String getNewCcType() {
+    public String getNewCcType() {
         return newCcType;
     }
 
-    void setNewCcType(String newCcType) {
+    public void setNewCcType(String newCcType) {
         this.newCcType = newCcType;
     }
 
-    boolean isNewCc() {
+    public boolean isNewCc() {
         return newCc;
     }
 
-    void setNewCc(boolean newCc) {
+    public void setNewCc(boolean newCc) {
         this.newCc = newCc;
     }
 
-    boolean isOneClick() {
+    public boolean isOneClick() {
         return oneClick;
     }
 
-    void setOneClick(boolean oneClick) {
+    public void setOneClick(boolean oneClick) {
         this.oneClick = oneClick;
     }
 
-    String getShipAddress() {
+    public String getShipAddress() {
         return shipAddress;
     }
 
-    void setShipAddress(String shipAddress) {
+    public void setShipAddress(String shipAddress) {
         this.shipAddress = shipAddress;
     }
 
-    String getShipCity() {
+    public String getShipCity() {
         return shipCity;
     }
 
-    void setShipCity(String shipCity) {
+    public void setShipCity(String shipCity) {
         this.shipCity = shipCity;
     }
 
-    String getShipState() {
+    public String getShipState() {
         return shipState;
     }
 
-    void setShipState(String shipState) {
+    public void setShipState(String shipState) {
         this.shipState = shipState;
     }
 
-    int getShipZip() {
+    public int getShipZip() {
         return shipZip;
     }
 
-    void setShipZip(int shipZip) {
+    public void setShipZip(int shipZip) {
         this.shipZip = shipZip;
     }
 

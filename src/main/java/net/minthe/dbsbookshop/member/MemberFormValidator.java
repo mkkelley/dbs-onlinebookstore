@@ -1,5 +1,6 @@
 package net.minthe.dbsbookshop.member;
 
+import net.minthe.dbsbookshop.util.CreditCardValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -44,54 +45,11 @@ public class MemberFormValidator implements Validator {
 
         rejectIfEmptyOrWhitespace(errors, "password", "password.empty");
 
-        if (!memberForm.getCreditcardtype().trim().isEmpty() &&
-                !memberForm.getCreditcardnumber().trim().isEmpty()) {
-            String ccn = memberForm.getCreditcardnumber();
-            int[] ccDigits = new int[ccn.length()];
-            int checkDigit = checkDigitLuhn(errors, ccn, ccDigits);
-            if (checkDigit != ccDigits[0]) {
-                errors.rejectValue("creditcardnumber", "creditcardnumber.invalid");
-            }
-
-            String type = memberForm.getCreditcardtype();
-            if (!"amex".equals(type) &&
-                    !"mc".equals(type) &&
-                    !"visa".equals(type) &&
-                    !"discover".equals(type)) {
-                errors.rejectValue("creditcardtype", "creditcardtype.invalid");
-            }
-        } else if (memberForm.getCreditcardtype().trim().isEmpty() &&
-                memberForm.getCreditcardnumber().trim().isEmpty()) {
-        } else if (memberForm.getCreditcardtype().trim().isEmpty()) {
-            errors.rejectValue("creditcardnumber", "creditcardnumber.notSpecified");
-        } else if (memberForm.getCreditcardnumber().trim().isEmpty()) {
-            errors.rejectValue("creditcardtype", "creditcardtype.notSpecified");
-        }
-    }
-
-    private int checkDigitLuhn(Errors errors, String ccn, int[] ccDigits) {
-        for (int i = ccn.length() - 1; i >= 0; --i) {
-            if (!Character.isDigit(ccn.charAt(i))) {
-                errors.rejectValue("creditcardnumber", "creditcardnumber.nonNumber");
-                break;
-            }
-            ccDigits[ccn.length() - 1 - i] = ccn.charAt(i) - '0';
-        }
-
-        int sum = 0;
-        for (int i = 1; i < ccDigits.length; ++i) {
-            if (i % 2 == 1) {
-                int doubled = ccDigits[i] * 2;
-                if (doubled > 9) {
-                    sum += doubled - 9;
-                } else {
-                    sum += doubled;
-                }
-            } else {
-                sum += ccDigits[i];
-            }
-        }
-
-        return (sum * 9) % 10;
+        CreditCardValidator.validateCreditCard(
+                errors,
+                memberForm.getCreditcardnumber().trim(),
+                memberForm.getCreditcardtype().trim(),
+                "creditcardnumber",
+                "creditcardtype");
     }
 }

@@ -1,5 +1,6 @@
 package net.minthe.dbsbookshop.order;
 
+import net.minthe.dbsbookshop.util.CreditCardValidator;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -21,13 +22,18 @@ public class OrderFormValidator implements Validator {
             return;
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipCity", "shipCity.empty");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipState", "shipState.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipAddress", "shipAddress.empty");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipCity", "shipCity.empty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "shipState", "shipState.empty");
+
+
         if (orderForm.isNewCc()) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCcn", "newCcn.empty");
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "newCcType", "newCcType.empty");
+            CreditCardValidator.validateCreditCard(
+                    errors,
+                    orderForm.getNewCcn(),
+                    orderForm.getNewCcType(),
+                    "newCcn",
+                    "newCcType");
         }
 
         if (orderForm.getShipZip() < 10000 ||

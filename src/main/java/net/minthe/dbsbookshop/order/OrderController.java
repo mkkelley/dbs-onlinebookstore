@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class OrderController {
     private final LoginService loginService;
     private final MemberRepository memberRepository;
 
-    @InitBinder("orderSubmission")
+    @InitBinder("orderForm")
     protected void initBinder(WebDataBinder binder) {
         binder.addValidators(new OrderFormValidator());
     }
@@ -55,7 +56,11 @@ public class OrderController {
     }
 
     @PostMapping("/order/new")
-    public String submitOrder(@Valid @ModelAttribute OrderForm orderForm) {
+    public String submitOrder(@Valid @ModelAttribute OrderForm orderForm,
+                              BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "order/order_new";
+        }
         if (!orderService.canOrder(loginService.getUser())) {
             return "redirect:/cart";
         }
@@ -87,8 +92,8 @@ public class OrderController {
     @GetMapping("/order/new")
     public String newOrder(Model model) {
 
-        OrderForm order = new OrderForm();
-        model.addAttribute("order", order);
+        OrderForm orderForm = new OrderForm();
+        model.addAttribute("orderForm", orderForm);
         return "order/order_new";
     }
 

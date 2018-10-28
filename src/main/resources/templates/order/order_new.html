@@ -8,7 +8,7 @@
 <body>
 <section class="col-md-12">
     <form th:action="@{/order/new}"
-          th:object="${order}"
+          th:object="${orderForm}"
           name="f"
           method="post">
         <fieldset>
@@ -20,12 +20,15 @@
                 <div class="col-md-3 form-group">
                     <input id="shipAddress" type="text" name="shipAddress" class="form-control"
                            th:field="*{shipAddress}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('shipAddress')}"
+                          th:errors="*{shipAddress}"></span>
                 </div>
                 <div class="col-md-3 form-group">
                     <label for="shipCity">Shipping City:</label>
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="shipCity" type="text" name="shipCity" class="form-control" th:field="*{shipCity}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('shipCity')}" th:errors="*{shipCity}"></span>
                 </div>
             </div>
             <div class="row">
@@ -34,12 +37,14 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="shipState" type="text" name="shipState" class="form-control" th:field="*{shipState}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('shipState')}" th:errors="*{shipState}"></span>
                 </div>
                 <div class="col-md-3 form-group">
                     <label for="shipZip">Shiping Zip:</label>
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="shipZip" type="text" name="shipZip" class="form-control" th:field="*{shipZip}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('shipZip')}" th:errors="*{shipZip}"></span>
                 </div>
             </div>
             <div class="row">
@@ -52,6 +57,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="newCcn" type="text" name="newCcn" class="form-control" disabled th:field="*{newCcn}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('newCcn')}" th:errors="*{newCcn}"></span>
                 </div>
                 <div class="col-md-2 form-group">
                     <label for="newCcType">New Credit Card Type:</label>
@@ -59,6 +65,7 @@
                 <div class="col-md-2 form-group">
                     <input id="newCcType" type="text" name="newCcType" class="form-control" disabled
                            th:field="*{newCcType}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('newCcType')}" th:errors="*{newCcType}"></span>
                 </div>
             </div>
             <input type="submit" class="btn btn-warning" value="Check Out"/>

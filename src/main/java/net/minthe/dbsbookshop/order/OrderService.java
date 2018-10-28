@@ -39,8 +39,8 @@ public class OrderService {
 
     public boolean canOrder(Member member) {
         return cartRepository.findByUserid(member).size() > 0 &&
-                !member.getCreditcardnumber().equals("") &&
-                !member.getCreditcardtype().equals("");
+                !"".equals(member.getCreditcardnumber()) &&
+                !"".equals(member.getCreditcardtype());
 
     }
 
