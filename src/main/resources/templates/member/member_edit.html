@@ -18,6 +18,7 @@
                 </div>
                 <div class="col-md-3 form-group">
                     <input id="password" type="text" name="password" class="form-control" th:field="*{password}"/>
+                    <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
             </div>
             <div th:replace="member/form :: formfields"></div>

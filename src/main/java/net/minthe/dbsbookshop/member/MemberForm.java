@@ -22,99 +22,119 @@ class MemberForm {
     private String creditcardtype;
     private String creditcardnumber;
 
-    String getFname() {
+    public MemberForm() {}
+
+    // Conversion is fine because we go more trusted -> less
+    public MemberForm(Member member) {
+        setFname(member.getFname());
+        setLname(member.getLname());
+        setAddress(member.getAddress());
+        setCity(member.getCity());
+        setState(member.getState());
+        setZip(member.getZip());
+
+        setPhone(member.getPhone());
+        setEmail(member.getEmail());
+
+        setUserid(member.getUserid());
+        setPassword(member.getPassword());
+        setCreditcardnumber(member.getCreditcardnumber());
+        setCreditcardtype(member.getCreditcardtype());
+    }
+
+    public String getFname() {
         return fname;
     }
 
-    void setFname(String fname) {
+    public void setFname(String fname) {
         this.fname = fname;
     }
 
-    String getLname() {
+    public String getLname() {
         return lname;
     }
 
-    void setLname(String lname) {
+    public void setLname(String lname) {
         this.lname = lname;
     }
 
-    String getAddress() {
+    public String getAddress() {
         return address;
     }
 
-    void setAddress(String address) {
+    public void setAddress(String address) {
         this.address = address;
     }
 
-    String getCity() {
+    public String getCity() {
         return city;
     }
 
-    void setCity(String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
-    String getState() {
+    public String getState() {
         return state;
     }
 
-    void setState(String state) {
+    public void setState(String state) {
         this.state = state;
     }
 
-    int getZip() {
+    public int getZip() {
         return zip;
     }
 
-    void setZip(int zip) {
+    public void setZip(int zip) {
         this.zip = zip;
     }
 
-    String getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    void setPhone(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    void setEmail(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    String getUserid() {
+    public String getUserid() {
         return userid;
     }
 
-    void setUserid(String userid) {
+    public void setUserid(String userid) {
         this.userid = userid;
     }
 
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    String getCreditcardtype() {
+    public String getCreditcardtype() {
         return creditcardtype;
     }
 
-    void setCreditcardtype(String creditcardtype) {
+    public void setCreditcardtype(String creditcardtype) {
         this.creditcardtype = creditcardtype;
     }
 
-    String getCreditcardnumber() {
+    public String getCreditcardnumber() {
         return creditcardnumber;
     }
 
-    void setCreditcardnumber(String creditcardnumber) {
+    public void setCreditcardnumber(String creditcardnumber) {
         this.creditcardnumber = creditcardnumber;
     }
 

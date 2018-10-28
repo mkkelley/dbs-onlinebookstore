@@ -30,6 +30,11 @@ public class MemberController {
         binder.addValidators(new MemberFormValidator(memberRepository));
     }
 
+    @InitBinder("member")
+    protected void memberInitBinder(WebDataBinder binder) {
+        binder.addValidators(new MemberValidator(memberRepository));
+    }
+
     @GetMapping(value = "/member")
     public String listMembers(Model model) {
         Iterable<Member> members = memberRepository.findAll();
@@ -51,15 +56,16 @@ public class MemberController {
         if (bindingResult.hasErrors()) {
             return "member/member_new";
         }
-        memberService.createMember(memberForm);
+        memberService.saveMember(memberForm);
         return "redirect:/login";
     }
 
     @RequestMapping("/member/{userid}/edit")
-    public String editMember(@PathVariable String userid, Model model) {
+    public String editMember(@PathVariable String userid,
+                             Model model) {
         Optional<Member> m = memberRepository.findByUserid(userid);
         if (!m.isPresent()) {
-            return "";
+            return "redirect:/member";
         }
 
         Member member = m.get();
@@ -80,10 +86,15 @@ public class MemberController {
     }
 
     @PostMapping("/member/{userid}")
-    public String updateMember(@PathVariable String userid, @ModelAttribute Member member) {
+    public String updateMember(@PathVariable String userid,
+                               @Valid @ModelAttribute Member member,
+                               BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "member/member_edit";
+        }
         Optional<Member> m = memberRepository.findByUserid(userid);
         if (!m.isPresent() || !m.get().getUserid().equals(member.getUserid())) {
-            return "";
+            return "redirect:/login";
         }
         memberRepository.save(member);
 

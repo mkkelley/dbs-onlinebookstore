@@ -14,7 +14,7 @@ public class MemberService {
     @Autowired
     public MemberService(MemberRepository memberRepository) {this.memberRepository = memberRepository;}
 
-    public void createMember(MemberForm memberForm) {
+    public void saveMember(MemberForm memberForm) {
         Member m = new Member();
         m.setUserid(memberForm.getUserid());
         m.setPassword(memberForm.getPassword());
