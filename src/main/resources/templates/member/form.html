@@ -61,7 +61,22 @@
                 <input id="email" type="text" name="email" class="form-control" th:field="*{email}"/>
             </div>
         </div>
-
+        <div class="row">
+            <div class="col-md-3 form-group">
+                <label for="creditcardnumber">Credit Card Number (optional):</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="creditcardnumber" type="text" name="creditcardnumber" class="form-control"
+                       th:field="*{creditcardnumber}"/>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="creditcardtype">Credit Card Type (optional):</label>
+            </div>
+            <div class="col-md-3 form-group">
+                <input id="creditcardtype" type="text" name="creditcardtype" class="form-control"
+                       th:field="*{creditcardtype}"/>
+            </div>
+        </div>
         <div class="row form-group">
             <div class="col-md-3 form-group">
                 <input type="submit" class="form-control" value="Submit"/>
