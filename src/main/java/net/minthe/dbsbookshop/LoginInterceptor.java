@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Michael Kelley on 10/26/2018
- *
+ * <p>
  * Disallow access to any page other than login or registration if the user is
  * not logged in.
  */
@@ -26,7 +26,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (!loginService.userLoggedIn() &&
                 !request.getServletPath().equals("/login") &&
-                !request.getServletPath().equals("/member/new")
+                !request.getServletPath().equals("/member/new") &&
+                !request.getServletPath().startsWith("/webjars/")
         ) {
             response.sendRedirect("/login");
             return false;
