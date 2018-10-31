@@ -47,6 +47,8 @@ public class LoginService {
     }
 
     public Member getUser() {
-        return user;
+        Optional<Member> memberOptional = memberRepository.findByUserid(this.user.getUserid());
+
+        return memberOptional.orElseThrow();
     }
 }
