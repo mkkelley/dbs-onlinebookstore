@@ -5,6 +5,21 @@
 </head>
 <body>
 <section class="col-md-12">
+    <div class="row">
+        <div class="col-md-1">
+            <a class="btn btn-outline-primary"
+               th:if="${hasPrevPage}"
+               th:href="@{/book/(page=${prevPage})}"
+               th:text="'Previous Page'"></a>
+        </div>
+        <div class="col-md-10"></div>
+        <div class="col-md-1">
+            <a class="btn btn-outline-primary"
+               th:if="${hasNextPage}"
+               th:href="@{/book/(page=${nextPage})}"
+               th:text="'Next Page'"></a>
+        </div>
+    </div>
     <table th:replace="book/table :: book_table"></table>
     <script th:src="@{/book.js}"></script>
 </section>

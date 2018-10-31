@@ -16,6 +16,8 @@ public interface BookRepository extends CrudRepository<Book, String> {
     @Query(value="select distinct subject from books", nativeQuery = true)
     List<String> listDistinctSubject();
 
+    Page<Book> findAll(Pageable pageable);
+
     Page<Book> findBooksBySubjectIgnoreCase(String subject, Pageable pageable);
 
     Page<Book> findBooksByAuthorLikeIgnoreCase(String author, Pageable pageable);

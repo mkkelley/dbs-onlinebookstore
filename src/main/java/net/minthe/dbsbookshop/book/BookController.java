@@ -22,10 +22,15 @@ public class BookController {
     public BookController(BookRepository bookRepository) {this.bookRepository = bookRepository;}
 
     @GetMapping("/book")
-    public String listBooks(Model model) {
-        Iterable<Book> books = bookRepository.findAll();
+    public String listBooks(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            Model model) {
+        Page<Book> books = bookRepository.findAll(PageRequest.of(page, size));
 
         model.addAttribute("books", books);
+        addPaginationInformation(model, books);
+
         return "book/book_list";
     }
 
@@ -37,10 +42,11 @@ public class BookController {
     }
 
     @GetMapping("/book/subject/{subject}")
-    public String listBooksBySubject(@PathVariable String subject,
-                                     @RequestParam(value = "page", required = false, defaultValue = "0") int page,
-                                     @RequestParam(value = "size", required = false, defaultValue = "10") int size,
-                                     Model model) {
+    public String listBooksBySubject(
+            @PathVariable String subject,
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            Model model) {
         Page<Book> books = bookRepository.findBooksBySubjectIgnoreCase(subject, PageRequest.of(page, size));
 
         model.addAttribute("books", books);
@@ -56,10 +62,11 @@ public class BookController {
     }
 
     @GetMapping("/book/author_search")
-    public String searchBooksByAuthor(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
-                                      @RequestParam(value = "size", required = false, defaultValue = "10") int size,
-                                      @RequestParam(value = "author") String author,
-                                      Model model) {
+    public String searchBooksByAuthor(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "author") String author,
+            Model model) {
         Page<Book> books = bookRepository.findBooksByAuthorLikeIgnoreCase(
                 "%" + author + "%",
                 PageRequest.of(page, size));
@@ -72,10 +79,11 @@ public class BookController {
     }
 
     @GetMapping("/book/title_search")
-    public String searchBooksByTitle(@RequestParam(value = "page", required = false, defaultValue = "0") int page,
-                                     @RequestParam(value = "size", required = false, defaultValue = "10") int size,
-                                     @RequestParam(value = "title") String title,
-                                     Model model) {
+    public String searchBooksByTitle(
+            @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") int size,
+            @RequestParam(value = "title") String title,
+            Model model) {
         Page<Book> books = bookRepository.findBooksByTitleLikeIgnoreCase(
                 "%" + title + "%",
                 PageRequest.of(page, size));
