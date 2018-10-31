@@ -20,7 +20,7 @@ public class Order {
     private Member userid;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ORDER_SEQUENCE")
-    @SequenceGenerator(name = "ORDER_SEQUENCE", sequenceName = "ORDER_SEQUENCE")
+    @SequenceGenerator(name = "ORDER_SEQUENCE", sequenceName = "ORDER_SEQUENCE", allocationSize = 1)
     private long ono;
     @Column(nullable = false)
     private Timestamp received;
