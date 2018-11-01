@@ -21,4 +21,9 @@ public interface CartRepository extends CrudRepository<Cart, CartKey> {
             "       inner join BOOKS on CART.ISBN = BOOKS.ISBN " +
             "where userid = :userid", nativeQuery = true)
     BigDecimal getTotalForMember(@Param("userid") Member userid);
+
+    @Query(value = "select count(*) " +
+            "from cart " +
+            "where userid = :userid", nativeQuery = true)
+    int getCartCount(@Param("userid") Member userid);
 }
