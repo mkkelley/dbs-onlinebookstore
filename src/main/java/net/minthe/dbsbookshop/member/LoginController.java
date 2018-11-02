@@ -1,13 +1,9 @@
 package net.minthe.dbsbookshop.member;
 
-import net.minthe.dbsbookshop.member.UserAuthenticationRequest;
-import net.minthe.dbsbookshop.member.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -38,24 +34,5 @@ public class LoginController {
         loginService.logout();
         redirectAttributes.addFlashAttribute("You have logged out successfully.");
         return "redirect:/login";
-    }
-
-    @PostMapping("/login")
-    public String authenticate(@ModelAttribute UserAuthenticationRequest uar, Model model) {
-        String userid = uar.getUserid();
-        String password = uar.getPassword();
-
-        boolean memberExists = loginService.useridExists(userid);
-        boolean correctPassword = loginService.authenticate(userid, password);
-        if (!memberExists) {
-            model.addAttribute("message", "Specified member does not exist.");
-        } else if (!correctPassword) {
-            model.addAttribute("message", "Incorrect password. Please try again.");
-        } else {
-            model.addAttribute("message", "You have been logged in successfully.");
-            return "redirect:/book";
-        }
-        model.addAttribute("uar", new UserAuthenticationRequest());
-        return "login";
     }
 }

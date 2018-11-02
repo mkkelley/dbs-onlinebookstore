@@ -1,6 +1,9 @@
 package net.minthe.dbsbookshop.member;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,12 +46,23 @@ public class LoginService {
     }
 
     public boolean userLoggedIn() {
-        return user != null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) return false;
+        String name = authentication.getName();
+        if (name.equals("anonymousUser")) return false;
+        return memberRepository.findByUserid(
+                ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()
+        ).isPresent();
     }
 
     public Member getUser() {
-        Optional<Member> memberOptional = memberRepository.findByUserid(this.user.getUserid());
-
-        return memberOptional.orElseThrow();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (!authentication.isAuthenticated()) {
+            return null;
+        } else {
+            return memberRepository.findByUserid(
+                    ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername()
+            ).orElseThrow();
+        }
     }
 }

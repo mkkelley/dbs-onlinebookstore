@@ -4,22 +4,22 @@ package net.minthe.dbsbookshop.member;
  * Created by Michael Kelley on 10/22/2018
  */
 public class UserAuthenticationRequest {
-    private String userid;
+    private String username;
     private String password;
 
-    public UserAuthenticationRequest(String userid, String password) {
-        this.userid = userid;
+    public UserAuthenticationRequest(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
     public UserAuthenticationRequest() {}
 
-    public String getUserid() {
-        return userid;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -33,7 +33,7 @@ public class UserAuthenticationRequest {
     @Override
     public String toString() {
         return "UserAuthenticationRequest{" +
-                "userid='" + userid + '\'' +
+                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
@@ -45,13 +45,13 @@ public class UserAuthenticationRequest {
 
         UserAuthenticationRequest that = (UserAuthenticationRequest) o;
 
-        if (userid != null ? !userid.equals(that.userid) : that.userid != null) return false;
+        if (username != null ? !username.equals(that.username) : that.username != null) return false;
         return password != null ? password.equals(that.password) : that.password == null;
     }
 
     @Override
     public int hashCode() {
-        int result = userid != null ? userid.hashCode() : 0;
+        int result = username != null ? username.hashCode() : 0;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         return result;
     }

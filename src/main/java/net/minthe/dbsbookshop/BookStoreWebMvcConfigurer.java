@@ -6,12 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Created by Michael Kelley on 10/26/2018
- *
+ * <p>
  * Spring configuration class to register LoginInterceptor
  */
 @Configuration
@@ -38,10 +37,5 @@ public class BookStoreWebMvcConfigurer implements WebMvcConfigurer {
 
     @Autowired
     public BookStoreWebMvcConfigurer(LoginInterceptor loginInterceptor) {this.loginInterceptor = loginInterceptor;}
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor);
-    }
 }
 
