@@ -48,7 +48,7 @@ class BookList extends Component {
 class PaginationButton extends Component {
     render() {
         return (
-            <a className="btn btn-outline-primary"
+            <a className="btn btn-outline-primary btn-block"
                onClick={() => this.props.onClick()}>
                 {this.props.text}
             </a>
@@ -64,7 +64,8 @@ export default class BookBrowser extends Component {
             books: [],
             hasNext: false,
             hasPrev: false,
-            currentPage: 0
+            currentPage: 0,
+            lastPage: 0
         };
     }
 
@@ -80,11 +81,13 @@ export default class BookBrowser extends Component {
             })
             .then(response => {
                 let data = response.data;
+                console.log(data);
                 this.setState({
                     books: data.content,
                     hasNext: !data.last,
                     hasPrev: !data.first,
-                    currentPage: data.number
+                    currentPage: data.number,
+                    lastPage: data.totalPages - 1
                 });
             });
     }
@@ -96,10 +99,28 @@ export default class BookBrowser extends Component {
     render() {
         return (
             <div>
-                {this.state.hasPrev &&
-                <PaginationButton text="Previous Page" onClick={() => this.getBooks(this.state.currentPage - 1)}/>}
-                {this.state.hasNext &&
-                <PaginationButton text="Next Page" onClick={() => this.getBooks(this.state.currentPage + 1)}/>}
+                <div className="row">
+                    <div className="col-md-2">
+                        {this.state.hasPrev &&
+                        <PaginationButton text="First" onClick={() => this.getBooks(0)}/>}
+                    </div>
+                    <div className="col-md-2">
+                        {this.state.hasPrev &&
+                        <PaginationButton text="Previous Page"
+                                          onClick={() => this.getBooks(this.state.currentPage - 1)}/>}
+                    </div>
+                    <div className="col-md-4 text-center">
+                        Page {this.state.currentPage + 1} of {this.state.lastPage + 1}
+                    </div>
+                    <div className="col-md-2">
+                        {this.state.hasNext &&
+                        <PaginationButton text="Next Page" onClick={() => this.getBooks(this.state.currentPage + 1)}/>}
+                    </div>
+                    <div className="col-md-2">
+                        {this.state.hasNext &&
+                        <PaginationButton text="Last" onClick={() => this.getBooks(this.state.lastPage)}/>}
+                    </div>
+                </div>
                 <BookList books={this.state.books} addToCart={this.props.cartChanged}/>
             </div>
 
