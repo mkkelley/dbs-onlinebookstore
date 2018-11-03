@@ -59,7 +59,12 @@ class CartItem extends Component {
                 <td>{this.props.cart.qty}</td>
                 <td>{this.props.cart.isbn.price}</td>
                 <td>{this.props.cart.isbn.price * this.props.cart.qty}</td>
-                <td>&nbsp;</td>
+                <td>
+                    <a href='#'
+                       className="btn btn-danger"
+                       onClick={() => this.props.removeFromCart(this.props.cart.isbn.isbn)}
+                    >X</a>
+                </td>
             </tr>
         )
 
@@ -76,17 +81,27 @@ class Cart extends Component {
     }
 
     componentDidMount() {
-        axios.get("/api/cart/list")
+        this.updateCart()
+    }
+
+    updateCart = () => {
+        ainst.get("/api/cart/list")
             .then(response => {
                 console.log(response.data);
                 this.setState({cartItems: response.data})
             });
-    }
+    };
+
+    removeFromCart = (isbn) => {
+        ainst.delete("/api/cart/" + isbn)
+            .then(() => this.updateCart());
+    };
 
     render() {
         const cartItems = this.state.cartItems.map(cart =>
-            <CartItem key={cart.isbn.isbn} cart={cart} onClick={() => {
-            }}/>
+            <CartItem key={cart.isbn.isbn}
+                      cart={cart}
+                      removeFromCart={this.removeFromCart}/>
         );
         return (
             <table className="table">

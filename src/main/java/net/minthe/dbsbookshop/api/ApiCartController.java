@@ -1,13 +1,13 @@
 package net.minthe.dbsbookshop.api;
 
+import net.minthe.dbsbookshop.book.Book;
+import net.minthe.dbsbookshop.book.BookRepository;
 import net.minthe.dbsbookshop.cart.Cart;
 import net.minthe.dbsbookshop.cart.CartRepository;
+import net.minthe.dbsbookshop.cart.CartService;
 import net.minthe.dbsbookshop.member.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,11 +20,15 @@ import java.util.List;
 public class ApiCartController {
     private final CartRepository cartRepository;
     private final LoginService loginService;
+    private final CartService cartService;
+    private final BookRepository bookRepository;
 
     @Autowired
-    public ApiCartController(CartRepository cartRepository, LoginService loginService) {
+    public ApiCartController(CartRepository cartRepository, LoginService loginService, CartService cartService, BookRepository bookRepository) {
         this.cartRepository = cartRepository;
         this.loginService = loginService;
+        this.cartService = cartService;
+        this.bookRepository = bookRepository;
     }
 
     @GetMapping("/cart/count")
@@ -35,5 +39,11 @@ public class ApiCartController {
     @GetMapping("/cart/list")
     public List<Cart> viewCart() {
         return cartRepository.findByUserid(loginService.getUser());
+    }
+
+    @DeleteMapping("/cart/{isbn}")
+    public void removeFromCart(@PathVariable String isbn) {
+        Book book = bookRepository.findByIsbn(isbn).orElseThrow();
+        cartService.setQty(loginService.getUser(), book, 0);
     }
 }
