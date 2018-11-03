@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -33,6 +34,12 @@ public class BookStoreWebMvcConfigurer implements WebMvcConfigurer {
         loggingFilter.setIncludeQueryString(true);
         loggingFilter.setIncludePayload(true);
         return loggingFilter;
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedMethods("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH");
     }
 
     @Autowired

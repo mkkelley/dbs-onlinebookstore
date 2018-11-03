@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Menu, {MenuItem} from 'rc-menu';
 import './App.css';
 import 'rc-menu/assets/index.css'
+import LoginForm from "./Login";
 
 class Book extends Component {
     render() {
@@ -198,11 +199,15 @@ class App extends Component {
         this.state = {
             subjectFilter: false,
             subject: "",
-            subjectPicker: false
+            subjectPicker: false,
+            isAuthenticated: false
         };
     }
 
     getMainContent() {
+        if (!this.state.isAuthenticated) {
+            return <LoginForm userAuthenticated={this.setAuthenticated}/>
+        }
         if (this.state.subjectPicker) {
             return <SubjectPicker key="subjPicker" onSubjectClick={(subject) => this.setState({
                 subjectFilter: true,
@@ -220,6 +225,10 @@ class App extends Component {
         }
     }
 
+    setAuthenticated(authenticated) {
+        this.setState({isAuthenticated: authenticated});
+    }
+
     handleCartAdd(isbn) {
         console.log(isbn)
     }
@@ -234,10 +243,10 @@ class App extends Component {
         return (
 
             <div>
-                <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)}>
+                {this.state.isAuthenticated && <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)}>
                     <MenuItem key="By Subject">By Subject</MenuItem>
                     <MenuItem key="cart"><CartButton/></MenuItem>
-                </Menu>
+                </Menu>}
                 {this.getMainContent()}
             </div>
 
