@@ -45,17 +45,37 @@ export default class LoginForm extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input onChange={this.handleChange}
-                       value={this.state.username}
-                       type="text" id="username" name="username"/>
-                <input onChange={this.handleChange}
-                       value={this.state.password}
-                       type="password" id="password" name="password"/>
-                <input type="submit"
-                       value="Login"
-                       disabled={!this.validateForm()}/>
-            </form>
+            <div>
+                <div className="osb-filler">&nbsp;</div>
+                <div className="row">
+                    <div className="col-md-3"></div>
+                    <div className="col-md-6">
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-group row">
+                                <label htmlFor="username" className="col-md-3">Username: </label>
+                                <input className="form-control col-md-9"
+                                       onChange={this.handleChange}
+                                       value={this.state.username}
+                                       type="text" id="username" name="username"/>
+                            </div>
+                            <div className="form-group row">
+                                <label htmlFor="password" className="col-md-3">Password: </label>
+                                <input className="form-control col-md-9"
+                                       onChange={this.handleChange}
+                                       value={this.state.password}
+                                       type="password" id="password" name="password"/>
+                            </div>
+                            <div className="text-center">
+                                <input className="btn btn-primary block"
+                                       type="submit"
+                                       value="Login"
+                                       disabled={!this.validateForm()}/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
         )
     }
 }

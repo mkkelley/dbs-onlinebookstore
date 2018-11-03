@@ -92,9 +92,22 @@ class App extends Component {
             subjectFilter: false,
             subject: "",
 
+            titleSearch: false,
+            titleFilter: false,
+            title: "",
+
+            authorSearch: false,
+            authorFilter: false,
+            author: "",
+
             cartView: false
         };
     }
+
+    isInSecondaryView = () => {
+        return this.state.cartView ||
+            this.state.subjectPicker;
+    };
 
     getMainContent = () => {
         if (!this.state.isAuthenticated) {
@@ -138,18 +151,31 @@ class App extends Component {
             this.setState({isAuthenticated: false});
         } else if (e.key === "cart") {
             this.setState({cartView: true});
+        } else if (e.key === "back") {
+            this.setState({
+                cartView: false,
+                subjectPicker: false
+            })
         }
     };
 
     render() {
         return (
             <div>
-                {this.state.isAuthenticated && <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)}>
+                {this.state.isAuthenticated && !this.isInSecondaryView() &&
+                <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)} mode="horizontal">
                     <MenuItem key="By Subject">By Subject</MenuItem>
-                    <MenuItem key="cart"><CartButton/></MenuItem>
-                    <MenuItem key="logout">Logout</MenuItem>
+
+                    <MenuItem key="logout" className="float-right">Logout</MenuItem>
+                    <MenuItem key="cart" className="float-right"><CartButton/></MenuItem>
                 </Menu>}
-                {this.getMainContent()}
+                {this.isInSecondaryView() &&
+                <Menu key="backMenu" onClick={this.handleMenuClick} mode="horizontal">
+                    <MenuItem key="back">Back</MenuItem>
+                </Menu>}
+                <div className="container">
+                    {this.getMainContent()}
+                </div>
             </div>
         );
     }
