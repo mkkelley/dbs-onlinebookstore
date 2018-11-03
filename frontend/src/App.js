@@ -177,7 +177,9 @@ class CartButton extends Component {
     componentDidMount() {
         ainst.get("http://localhost:7070/api/cart/count")
             .then(response =>
-                this.setState({count: response.data.count}));
+                this.setState(
+                    {count: response.data}
+                ));
     }
 
     render() {
