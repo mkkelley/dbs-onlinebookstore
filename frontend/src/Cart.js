@@ -46,7 +46,8 @@ export default class Cart extends Component {
         super(props);
 
         this.state = {
-            cartItems: []
+            cartItems: [],
+            total: 0
         }
     }
 
@@ -60,6 +61,9 @@ export default class Cart extends Component {
                 console.log(response.data);
                 this.setState({cartItems: response.data})
             });
+        window.ainst.get("/api/cart/total")
+            .then(response =>
+                this.setState({total: response.data}));
     };
 
     changeBookQty = (isbn, newQty) => {
@@ -94,6 +98,14 @@ export default class Cart extends Component {
                 </thead>
                 <tbody>
                 {cartItems}
+                {cartItems.length !== 0 &&
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>${Number(this.state.total).toFixed(2)}</td>
+                    <td>&nbsp;</td>
+                </tr>}
                 </tbody>
 
             </table>

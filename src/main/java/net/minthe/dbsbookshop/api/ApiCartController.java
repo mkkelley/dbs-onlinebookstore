@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -42,6 +43,11 @@ public class ApiCartController {
     @GetMapping("/cart/list")
     public List<Cart> viewCart() {
         return cartRepository.findByUserid(loginService.getUser());
+    }
+
+    @GetMapping("/cart/total")
+    public BigDecimal getTotal() {
+        return cartService.getTotal(loginService.getUser());
     }
 
     @PostMapping("/cart/{isbn}")

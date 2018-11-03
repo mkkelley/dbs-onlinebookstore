@@ -50,33 +50,9 @@ class SubjectPicker extends Component {
 }
 
 class CartButton extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            count: 0
-        }
-    }
-
-    updateCount = () => {
-        ainst.get("/api/cart/count")
-            .then(response =>
-                this.setState(
-                    {count: response.data}
-                ));
-    };
-
-    componentDidMount() {
-        this.updateCount()
-    }
-
-    componentDidUpdate() {
-        this.updateCount();
-    }
-
     render() {
         return (
-            <div>Cart ({this.state.count})</div>
+            <div>Cart ({this.props.count})</div>
         )
     }
 }
@@ -100,7 +76,8 @@ class App extends Component {
             authorFilter: false,
             author: "",
 
-            cartView: false
+            cartView: false,
+            count: 0
         };
     }
 
@@ -136,15 +113,16 @@ class App extends Component {
     setAuthenticated = (username, password) => {
         ainst.defaults.headers.common['Authorization'] = "Basic " + btoa(username + ":" + password);
         this.setState({isAuthenticated: true});
+        this.updateCount()
     };
 
     handleCartAdd = (isbn) => {
-        console.log(isbn);
         ainst.post("/api/cart/" + isbn)
-            .then(() => this.setState())
+            .then(() => this.updateCount())
     };
 
     handleMenuClick = (e) => {
+        this.updateCount();
         if (e.key === "By Subject") {
             this.setState({subjectPicker: true})
         } else if (e.key === "logout") {
@@ -159,6 +137,14 @@ class App extends Component {
         }
     };
 
+    updateCount = () => {
+        ainst.get("/api/cart/count")
+            .then(response =>
+                this.setState(
+                    {count: response.data}
+                ));
+    };
+
     render() {
         return (
             <div>
@@ -167,7 +153,7 @@ class App extends Component {
                     <MenuItem key="By Subject">By Subject</MenuItem>
 
                     <MenuItem key="logout" className="float-right">Logout</MenuItem>
-                    <MenuItem key="cart" className="float-right"><CartButton/></MenuItem>
+                    <MenuItem key="cart" className="float-right"><CartButton key="cartButton" count={this.state.count}/></MenuItem>
                 </Menu>}
                 {this.isInSecondaryView() &&
                 <Menu key="backMenu" onClick={this.handleMenuClick} mode="horizontal">
