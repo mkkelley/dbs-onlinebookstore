@@ -56,7 +56,12 @@ class CartItem extends Component {
         return (
             <tr>
                 <td>{this.props.cart.isbn.title}</td>
-                <td>{this.props.cart.qty}</td>
+                <td>
+                    <input type="text"
+                           value={this.props.cart.qty}
+                           onChange={(e) => this.props.setQty(this.props.cart.isbn.isbn, e.target.value)}
+                    />
+                </td>
                 <td>{this.props.cart.isbn.price}</td>
                 <td>{this.props.cart.isbn.price * this.props.cart.qty}</td>
                 <td>
@@ -67,7 +72,6 @@ class CartItem extends Component {
                 </td>
             </tr>
         )
-
     }
 }
 
@@ -92,6 +96,13 @@ class Cart extends Component {
             });
     };
 
+    changeBookQty = (isbn, newQty) => {
+        ainst.put("/api/cart/" + isbn, {qty: newQty})
+            .then(() => {
+                this.updateCart();
+            });
+    };
+
     removeFromCart = (isbn) => {
         ainst.delete("/api/cart/" + isbn)
             .then(() => this.updateCart());
@@ -101,7 +112,8 @@ class Cart extends Component {
         const cartItems = this.state.cartItems.map(cart =>
             <CartItem key={cart.isbn.isbn}
                       cart={cart}
-                      removeFromCart={this.removeFromCart}/>
+                      removeFromCart={this.removeFromCart}
+                      setQty={this.changeBookQty}/>
         );
         return (
             <table className="table">

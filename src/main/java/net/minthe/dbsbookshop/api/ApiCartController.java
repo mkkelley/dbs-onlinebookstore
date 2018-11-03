@@ -7,9 +7,12 @@ import net.minthe.dbsbookshop.cart.CartRepository;
 import net.minthe.dbsbookshop.cart.CartService;
 import net.minthe.dbsbookshop.member.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Michael Kelley on 11/1/2018
@@ -45,5 +48,24 @@ public class ApiCartController {
     public void removeFromCart(@PathVariable String isbn) {
         Book book = bookRepository.findByIsbn(isbn).orElseThrow();
         cartService.setQty(loginService.getUser(), book, 0);
+    }
+
+    @PutMapping("/cart/{isbn}")
+    public ResponseEntity<?> updateCart(@PathVariable String isbn, @RequestBody Map<String, String> data) {
+        if (data == null || data.isEmpty() || !data.containsKey("qty")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        int qty;
+
+        try {
+            qty = Integer.parseInt(data.get("qty"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        Book book = bookRepository.findByIsbn(isbn).orElseThrow();
+        cartService.setQty(loginService.getUser(), book, qty);
+        return ResponseEntity.ok(null);
     }
 }
