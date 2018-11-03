@@ -15,7 +15,7 @@ class Book extends Component {
                 <td>{this.props.book.title}</td>
                 <td>{this.props.book.author}</td>
                 <td>{this.props.book.subject}</td>
-                <td>{this.props.book.price}</td>
+                <td>${Number(this.props.book.price).toFixed(2)}</td>
                 <td><a className="btn btn-info" href='#'
                        onClick={() => this.props.onClick(this.props.book.isbn)}>
                     Add to Cart</a>
@@ -52,18 +52,33 @@ class BookList extends Component {
 }
 
 class CartItem extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            qty: this.props.cart.qty
+        }
+    }
+
+    handleQtyChange = (newQty) => {
+        this.setState({qty: newQty});
+        if (newQty !== "") {
+            this.props.setQty(this.props.cart.isbn.isbn, newQty)
+        }
+    };
+
     render() {
         return (
             <tr>
                 <td>{this.props.cart.isbn.title}</td>
                 <td>
                     <input type="text"
-                           value={this.props.cart.qty}
-                           onChange={(e) => this.props.setQty(this.props.cart.isbn.isbn, e.target.value)}
+                           value={this.state.qty}
+                           onChange={(e) => this.handleQtyChange(e.target.value)}
                     />
                 </td>
-                <td>{this.props.cart.isbn.price}</td>
-                <td>{this.props.cart.isbn.price * this.props.cart.qty}</td>
+                <td>${Number(this.props.cart.isbn.price).toFixed(2)}</td>
+                <td>${Number(this.props.cart.isbn.price * this.props.cart.qty).toFixed(2)}</td>
                 <td>
                     <a href='#'
                        className="btn btn-danger"
