@@ -44,6 +44,17 @@ public class ApiCartController {
         return cartRepository.findByUserid(loginService.getUser());
     }
 
+    @PostMapping("/cart/{isbn}")
+    public ResponseEntity<?> addToCart(@PathVariable String isbn) {
+        try {
+            Book book = bookRepository.findByIsbn(isbn).orElseThrow();
+            cartService.addBook(loginService.getUser(), book);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        return ResponseEntity.ok(null);
+    }
+
     @DeleteMapping("/cart/{isbn}")
     public void removeFromCart(@PathVariable String isbn) {
         Book book = bookRepository.findByIsbn(isbn).orElseThrow();

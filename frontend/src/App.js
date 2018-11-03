@@ -259,12 +259,20 @@ class CartButton extends Component {
         }
     }
 
-    componentDidMount() {
+    updateCount = () => {
         ainst.get("/api/cart/count")
             .then(response =>
                 this.setState(
                     {count: response.data}
                 ));
+    };
+
+    componentDidMount() {
+        this.updateCount()
+    }
+
+    componentDidUpdate() {
+        this.updateCount();
     }
 
     render() {
@@ -319,7 +327,9 @@ class App extends Component {
     };
 
     handleCartAdd = (isbn) => {
-        console.log(isbn)
+        console.log(isbn);
+        ainst.post("/api/cart/" + isbn)
+            .then(() => this.setState())
     };
 
     handleMenuClick = (e) => {
