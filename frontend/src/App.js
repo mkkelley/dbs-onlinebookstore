@@ -3,6 +3,9 @@ import Menu, {MenuItem} from 'rc-menu';
 import './App.css';
 import 'rc-menu/assets/index.css'
 import LoginForm from "./Login";
+import axios from 'axios';
+
+let ainst = axios.create();
 
 class Book extends Component {
     render() {
@@ -70,9 +73,8 @@ class SubjectPicker extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:7070/api/book/subject")
-            .then(res => res.json())
-            .then(res => this.setState({subjects: res}))
+        ainst.get("http://localhost:7070/api/book/subject")
+            .then(res => this.setState({subject: res.data}));
     }
 
     render() {
@@ -125,31 +127,24 @@ class BookBrowser extends Component {
     }
 
     getBooks(page = 0) {
-        const url = new URL(this.props.url);
-        url.search = new URLSearchParams(
+        let params =
             {
                 ...{page: page},
                 ...this.props.queryParams
-            });
-        fetch(url,
+            };
+        ainst.get(this.props.url,
             {
-                method: 'GET',
-                headers: {
-                    'Accept': 'application/json'
-                }
+                params: params
             })
-            .then(res => {
-                return res.json()
-            })
-            .then(
-                (response) => {
-                    this.setState({
-                        books: response.content,
-                        hasNext: !response.last,
-                        hasPrev: !response.first,
-                        currentPage: response.number
-                    });
+            .then(response => {
+                let data = response.data;
+                this.setState({
+                    books: data.content,
+                    hasNext: !data.last,
+                    hasPrev: !data.first,
+                    currentPage: data.number
                 });
+            });
     }
 
     componentDidMount() {
@@ -180,9 +175,9 @@ class CartButton extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:7070/api/cart/count")
-            .then(res => res.json())
-            .then(response => this.setState({count: response}))
+        ainst.get("http://localhost:7070/api/cart/count")
+            .then(response =>
+                this.setState({count: response.data.count}));
     }
 
     render() {
@@ -204,7 +199,7 @@ class App extends Component {
         };
     }
 
-    getMainContent() {
+    getMainContent = () => {
         if (!this.state.isAuthenticated) {
             return <LoginForm userAuthenticated={this.setAuthenticated}/>
         }
@@ -223,25 +218,29 @@ class App extends Component {
             return <BookBrowser key="none" url="http://localhost:7070/api/book"
                                 cartChanged={this.handleCartAdd}/>
         }
-    }
+    };
 
-    setAuthenticated(authenticated) {
-        this.setState({isAuthenticated: authenticated});
-    }
+    setAuthenticated = (username, password) => {
+        ainst.defaults.headers.common['Authorization'] = "Basic " + btoa(username + ":" + password);
+        this.setState(
+            {
+                isAuthenticated: true
+            }
+        );
+    };
 
-    handleCartAdd(isbn) {
+    handleCartAdd = (isbn) => {
         console.log(isbn)
-    }
+    };
 
-    handleMenuClick(e) {
+    handleMenuClick = (e) => {
         if (e.key === "By Subject") {
             this.setState({subjectPicker: true})
         }
-    }
+    };
 
     render() {
         return (
-
             <div>
                 {this.state.isAuthenticated && <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)}>
                     <MenuItem key="By Subject">By Subject</MenuItem>

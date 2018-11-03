@@ -33,8 +33,11 @@ export default class LoginForm extends Component {
                     password: this.state.password
                 }
             })
-            .then(response =>
-                console.log(response)
+            .then(response => {
+                    if (response.data === true) {
+                        this.props.userAuthenticated(this.state.username, this.state.password);
+                    }
+                }
             )
             .catch(error =>
                 console.log(error)
