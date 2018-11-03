@@ -74,7 +74,7 @@ class SubjectPicker extends Component {
 
     componentDidMount() {
         ainst.get("http://localhost:7070/api/book/subject")
-            .then(res => this.setState({subject: res.data}));
+            .then(res => this.setState({subjects: res.data}));
     }
 
     render() {
@@ -224,11 +224,7 @@ class App extends Component {
 
     setAuthenticated = (username, password) => {
         ainst.defaults.headers.common['Authorization'] = "Basic " + btoa(username + ":" + password);
-        this.setState(
-            {
-                isAuthenticated: true
-            }
-        );
+        this.setState({isAuthenticated: true});
     };
 
     handleCartAdd = (isbn) => {
@@ -238,6 +234,8 @@ class App extends Component {
     handleMenuClick = (e) => {
         if (e.key === "By Subject") {
             this.setState({subjectPicker: true})
+        } else if (e.key === "logout") {
+            this.setState({isAuthenticated: false});
         }
     };
 
@@ -247,10 +245,10 @@ class App extends Component {
                 {this.state.isAuthenticated && <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)}>
                     <MenuItem key="By Subject">By Subject</MenuItem>
                     <MenuItem key="cart"><CartButton/></MenuItem>
+                    <MenuItem key="logout">Logout</MenuItem>
                 </Menu>}
                 {this.getMainContent()}
             </div>
-
         );
     }
 }
