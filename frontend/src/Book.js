@@ -1,0 +1,109 @@
+import React, {Component} from 'react';
+import './App.css';
+
+class Book extends Component {
+    render() {
+        return (
+            <tr>
+                <td>{this.props.book.isbn}</td>
+                <td>{this.props.book.title}</td>
+                <td>{this.props.book.author}</td>
+                <td>{this.props.book.subject}</td>
+                <td>${Number(this.props.book.price).toFixed(2)}</td>
+                <td><a className="btn btn-info" href='#'
+                       onClick={() => this.props.onClick(this.props.book.isbn)}>
+                    Add to Cart</a>
+                </td>
+            </tr>
+        )
+    }
+}
+
+class BookList extends Component {
+    render() {
+        const books = this.props.books.map(book =>
+            <Book key={book.isbn} book={book} onClick={this.props.addToCart}/>
+        );
+        return (
+            <table className="table">
+                <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Subject</th>
+                    <th>Price</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                {books}
+                </tbody>
+
+            </table>
+        )
+    }
+}
+
+class PaginationButton extends Component {
+    render() {
+        return (
+            <a className="btn btn-outline-primary"
+               onClick={() => this.props.onClick()}>
+                {this.props.text}
+            </a>
+        )
+    }
+}
+
+export default class BookBrowser extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            books: [],
+            hasNext: false,
+            hasPrev: false,
+            currentPage: 0
+        };
+    }
+
+    getBooks(page = 0) {
+        let params =
+            {
+                ...{page: page},
+                ...this.props.queryParams
+            };
+        window.ainst.get(this.props.url,
+            {
+                params: params
+            })
+            .then(response => {
+                let data = response.data;
+                this.setState({
+                    books: data.content,
+                    hasNext: !data.last,
+                    hasPrev: !data.first,
+                    currentPage: data.number
+                });
+            });
+    }
+
+    componentDidMount() {
+        this.getBooks()
+    }
+
+    render() {
+        return (
+            <div>
+                {this.state.hasPrev &&
+                <PaginationButton text="Previous Page" onClick={() => this.getBooks(this.state.currentPage - 1)}/>}
+                {this.state.hasNext &&
+                <PaginationButton text="Next Page" onClick={() => this.getBooks(this.state.currentPage + 1)}/>}
+                <BookList books={this.state.books} addToCart={this.props.cartChanged}/>
+            </div>
+
+        );
+    }
+}
+

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
 import 'rc-menu/assets/index.css'
-import axios from 'axios';
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -23,7 +22,7 @@ export default class LoginForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:7070/api/login', {
+        window.ainst.post('http://localhost:7070/api/login', {
                 username: this.state.username,
                 password: this.state.password
             },
