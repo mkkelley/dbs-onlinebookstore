@@ -5,7 +5,7 @@ import 'rc-menu/assets/index.css'
 import LoginForm from "./Login";
 import axios from 'axios';
 
-let ainst = axios.create();
+let ainst = axios.create({baseURL: 'http://localhost:7070/'});
 
 class Book extends Component {
     render() {
@@ -39,7 +39,7 @@ class BookList extends Component {
                     <th>Author</th>
                     <th>Subject</th>
                     <th>Price</th>
-                    <th></th>
+                    <th>&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -59,7 +59,7 @@ class CartItem extends Component {
                 <td>{this.props.cart.qty}</td>
                 <td>{this.props.cart.isbn.price}</td>
                 <td>{this.props.cart.isbn.price * this.props.cart.qty}</td>
-                <td></td>
+                <td>&nbsp;</td>
             </tr>
         )
 
@@ -76,7 +76,7 @@ class Cart extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:7070/api/cart/list")
+        axios.get("/api/cart/list")
             .then(response => {
                 console.log(response.data);
                 this.setState({cartItems: response.data})
@@ -96,7 +96,7 @@ class Cart extends Component {
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
-                    <th></th>
+                    <th>&nbsp;</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -116,7 +116,7 @@ class SubjectPicker extends Component {
     }
 
     componentDidMount() {
-        ainst.get("http://localhost:7070/api/book/subject")
+        ainst.get("/api/book/subject")
             .then(res => this.setState({subjects: res.data}));
     }
 
@@ -218,7 +218,7 @@ class CartButton extends Component {
     }
 
     componentDidMount() {
-        ainst.get("http://localhost:7070/api/cart/count")
+        ainst.get("/api/cart/count")
             .then(response =>
                 this.setState(
                     {count: response.data}
@@ -237,10 +237,12 @@ class App extends Component {
         super(props);
 
         this.state = {
+            isAuthenticated: false,
+
+            subjectPicker: false,
             subjectFilter: false,
             subject: "",
-            subjectPicker: false,
-            isAuthenticated: false,
+
             cartView: false
         };
     }
@@ -261,10 +263,10 @@ class App extends Component {
         }
         if (this.state.subjectFilter) {
             return <BookBrowser key={this.state.subject}
-                                url={"http://localhost:7070/api/book/subject/" + this.state.subject}
+                                url={"/api/book/subject/" + this.state.subject}
                                 cartChanged={this.handleCartAdd}/>
         } else {
-            return <BookBrowser key="none" url="http://localhost:7070/api/book"
+            return <BookBrowser key="none" url="/api/book"
                                 cartChanged={this.handleCartAdd}/>
         }
     };
