@@ -55,13 +55,56 @@ class CartItem extends Component {
     render() {
         return (
             <tr>
-                <td>{this.props.cart.title}</td>
-                <td>{this.props.cart.quantity}</td>
-                <td>{this.props.cart.price}</td>
-                <td>{this.props.cart.price * this.props.cart.quantity}</td>
+                <td>{this.props.cart.isbn.title}</td>
+                <td>{this.props.cart.qty}</td>
+                <td>{this.props.cart.isbn.price}</td>
+                <td>{this.props.cart.isbn.price * this.props.cart.qty}</td>
+                <td></td>
             </tr>
         )
 
+    }
+}
+
+class Cart extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            cartItems: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get("http://localhost:7070/api/cart/list")
+            .then(response => {
+                console.log(response.data);
+                this.setState({cartItems: response.data})
+            });
+    }
+
+    render() {
+        const cartItems = this.state.cartItems.map(cart =>
+            <CartItem key={cart.isbn.isbn} cart={cart} onClick={() => {
+            }}/>
+        );
+        return (
+            <table className="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {cartItems}
+                </tbody>
+
+            </table>
+        )
     }
 }
 
@@ -197,13 +240,17 @@ class App extends Component {
             subjectFilter: false,
             subject: "",
             subjectPicker: false,
-            isAuthenticated: false
+            isAuthenticated: false,
+            cartView: false
         };
     }
 
     getMainContent = () => {
         if (!this.state.isAuthenticated) {
             return <LoginForm userAuthenticated={this.setAuthenticated}/>
+        }
+        if (this.state.cartView) {
+            return <Cart key="cart"/>
         }
         if (this.state.subjectPicker) {
             return <SubjectPicker key="subjPicker" onSubjectClick={(subject) => this.setState({
@@ -236,6 +283,8 @@ class App extends Component {
             this.setState({subjectPicker: true})
         } else if (e.key === "logout") {
             this.setState({isAuthenticated: false});
+        } else if (e.key === "cart") {
+            this.setState({cartView: true});
         }
     };
 

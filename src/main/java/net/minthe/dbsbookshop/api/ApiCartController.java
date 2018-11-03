@@ -1,5 +1,6 @@
 package net.minthe.dbsbookshop.api;
 
+import net.minthe.dbsbookshop.cart.Cart;
 import net.minthe.dbsbookshop.cart.CartRepository;
 import net.minthe.dbsbookshop.member.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by Michael Kelley on 11/1/2018
@@ -27,5 +30,10 @@ public class ApiCartController {
     @GetMapping("/cart/count")
     public int getCartCount() {
         return cartRepository.getCartCount(loginService.getUser());
+    }
+
+    @GetMapping("/cart/list")
+    public List<Cart> viewCart() {
+        return cartRepository.findByUserid(loginService.getUser());
     }
 }
