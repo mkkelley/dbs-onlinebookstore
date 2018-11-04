@@ -2,7 +2,25 @@ import React, {Component} from 'react';
 import './App.css';
 
 class Book extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            pendingAdd: false
+        }
+    }
+
+    addFinished = () => {
+        this.setState({pendingAdd: false})
+    };
+
     render() {
+        let style;
+        if (this.state.pendingAdd) {
+            style = "btn btn-warning"
+        } else {
+            style = "btn btn-info"
+        }
         return (
             <tr>
                 <td>{this.props.book.isbn}</td>
@@ -10,8 +28,12 @@ class Book extends Component {
                 <td>{this.props.book.author}</td>
                 <td>{this.props.book.subject}</td>
                 <td>${Number(this.props.book.price).toFixed(2)}</td>
-                <td><a className="btn btn-info" href='#'
-                       onClick={() => this.props.onClick(this.props.book.isbn)}>
+                <td><a className={style} href='#'
+                       onClick={() => {
+                           if (this.state.pendingAdd) return;
+                           this.setState({pendingAdd: true});
+                           this.props.onClick(this.props.book.isbn, this.addFinished);
+                       }}>
                     Add to Cart</a>
                 </td>
             </tr>
