@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import {Link} from "react-router-dom";
 
 
 class OrderItem extends Component {
@@ -17,28 +18,45 @@ class OrderItem extends Component {
 }
 
 export default class Order extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            order: null
+        }
+    }
+
+    componentDidMount() {
+        window.ainst.get("/api/order/" + this.props.order)
+            .then(response => {
+                console.log(response);
+                this.setState({order: response.data})
+            })
+    }
+
     render() {
-        const items = this.props.order.orderDetailsList.map(item =>
+        if (this.state.order === null) return null;
+        const items = this.state.order.orderDetailsList.map(item =>
             <OrderItem key={item.isbn.isbn} item={item}/>
         );
-        const total = this.props.order.orderDetailsList.map(item =>
+        const total = this.state.order.orderDetailsList.map(item =>
             item.price * item.qty
         ).reduce((a, b) => a + b, 0);
         return (
             <div>
-                <h1>Details for Order #{this.props.order.ono}</h1>
+                <h1>Details for Order #{this.state.order.ono}</h1>
                 <div className="row">
                     <div className="col-md-3">
                         Order Received
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.received}
+                        {this.state.order.received}
                     </div>
                     <div className="col-md-3">
                         Order Shipped
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.shipped}
+                        {this.state.order.shipped}
                     </div>
                 </div>
                 <div className="row">
@@ -46,13 +64,13 @@ export default class Order extends Component {
                         Shipping Address
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.shipAddress}
+                        {this.state.order.shipAddress}
                     </div>
                     <div className="col-md-3">
                         Shipping City
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.shipCity}
+                        {this.state.order.shipCity}
                     </div>
                 </div>
                 <div className="row">
@@ -60,13 +78,13 @@ export default class Order extends Component {
                         Shipping State
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.shipState}
+                        {this.state.order.shipState}
                     </div>
                     <div className="col-md-3">
                         Shipping Zip
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.shipZip}
+                        {this.state.order.shipZip}
                     </div>
                 </div>
                 <div className="row">
@@ -74,13 +92,13 @@ export default class Order extends Component {
                         Billing Address
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.userid.address}
+                        {this.state.order.userid.address}
                     </div>
                     <div className="col-md-3">
                         Billing City
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.userid.city}
+                        {this.state.order.userid.city}
                     </div>
                 </div>
                 <div className="row">
@@ -88,13 +106,13 @@ export default class Order extends Component {
                         Billing State
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.userid.state}
+                        {this.state.order.userid.state}
                     </div>
                     <div className="col-md-3">
                         Billing Zip
                     </div>
                     <div className="col-md-3">
-                        {this.props.order.userid.zip}
+                        {this.state.order.userid.zip}
                     </div>
                 </div>
                 <table className="table">
@@ -118,7 +136,7 @@ export default class Order extends Component {
                     </tr>
                     </tbody>
                 </table>
-                <a href="#" className="btn btn-primary" onClick={this.props.onBackButton}>Back to Order List</a>
+                <Link to="/order" className="btn btn-primary">Back to Order List</Link>
             </div>
         );
     }

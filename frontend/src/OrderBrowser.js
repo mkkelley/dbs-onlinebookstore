@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import './App.css';
 import Order from "./Order";
+import {Link} from "react-router-dom";
 
 class OrderListItem extends Component {
     render() {
         return (
             <tr>
-                <td><a href="#" onClick={() => this.props.onClick(this.props.order)}>Order #{this.props.order.ono}</a>
-                </td>
+                <td><Link to={"/order/" + this.props.order.ono}>Order #{this.props.order.ono}</Link></td>
                 <td>{this.props.order.received}</td>
                 <td>{this.props.order.shipped}</td>
             </tr>
@@ -42,20 +42,11 @@ export default class OrderBrowser extends Component {
     constructor(props) {
         super(props);
 
-        if (this.props.order !== null) {
-            this.state = {
-                orders: [],
+        this.state = {
+            orders: [],
 
-                orderView: true,
-                order: this.props.order
-            }
-        } else {
-            this.state = {
-                orders: [],
-
-                orderView: false,
-                order: null
-            }
+            orderView: false,
+            order: null
         }
     }
 

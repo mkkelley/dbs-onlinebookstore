@@ -7,12 +7,14 @@ import net.minthe.dbsbookshop.order.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Michael Kelley on 11/3/2018
@@ -34,6 +36,12 @@ public class ApiOrderController {
     @GetMapping("/order/list")
     public List<Order> listOrders() {
         return orderRepository.findByUseridWithDetails(loginService.getUser());
+    }
+
+    @GetMapping("/order/{ono}")
+    public Order getOrder(@PathVariable("ono") long ono) {
+        Optional<Order> optionalOrder = orderRepository.findById(ono);
+        return optionalOrder.orElseThrow();
     }
 
     @GetMapping("/order/oneclick")

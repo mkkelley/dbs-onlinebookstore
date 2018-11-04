@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import 'rc-menu/assets/index.css'
+import {Redirect} from "react-router-dom";
 
 export default class LoginForm extends Component {
     constructor(props) {
@@ -8,7 +9,8 @@ export default class LoginForm extends Component {
 
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            authenticated: false
         }
     }
 
@@ -34,7 +36,10 @@ export default class LoginForm extends Component {
             })
             .then(response => {
                     if (response.data === true) {
-                        this.props.userAuthenticated(this.state.username, this.state.password);
+                        window.ainst.defaults.headers.common['Authorization'] = "Basic " +
+                            btoa(this.state.username + ":" + this.state.password);
+                        window.isAuthenticated = true;
+                        this.setState({authenticated: true});
                     }
                 }
             )
@@ -44,6 +49,9 @@ export default class LoginForm extends Component {
     };
 
     render() {
+        if (this.state.authenticated) {
+            return <Redirect to="/book"/>
+        }
         return (
             <div>
                 <div className="osb-filler">&nbsp;</div>

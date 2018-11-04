@@ -10,8 +10,10 @@ class Book extends Component {
         }
     }
 
-    addFinished = () => {
-        this.setState({pendingAdd: false})
+    addBook = (isbn) => {
+        this.setState({pendingAdd: true});
+        window.ainst.post("/api/cart/" + isbn)
+            .then(() => this.setState({pendingAdd: false}))
     };
 
     render() {
@@ -31,8 +33,7 @@ class Book extends Component {
                 <td><a className={style} href='#'
                        onClick={() => {
                            if (this.state.pendingAdd) return;
-                           this.setState({pendingAdd: true});
-                           this.props.onClick(this.props.book.isbn, this.addFinished);
+                           this.addBook(this.props.book.isbn);
                        }}>
                     Add to Cart</a>
                 </td>
@@ -44,7 +45,7 @@ class Book extends Component {
 class BookList extends Component {
     render() {
         const books = this.props.books.map(book =>
-            <Book key={book.isbn} book={book} onClick={this.props.addToCart}/>
+            <Book key={book.isbn} book={book}/>
         );
         return (
             <table className="table">
@@ -143,7 +144,7 @@ export default class BookBrowser extends Component {
                         <PaginationButton text="Last" onClick={() => this.getBooks(this.state.lastPage)}/>}
                     </div>
                 </div>
-                <BookList books={this.state.books} addToCart={this.props.cartChanged}/>
+                <BookList books={this.state.books}/>
             </div>
 
         );
