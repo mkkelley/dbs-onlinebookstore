@@ -13,7 +13,12 @@ class Book extends Component {
     addBook = (isbn) => {
         this.setState({pendingAdd: true});
         window.ainst.post("/api/cart/" + isbn)
-            .then(() => this.setState({pendingAdd: false}))
+            .then(() => {
+                new Promise(resolve => setTimeout(resolve, 200))
+                    .then(() => {
+                        this.setState({pendingAdd: false})
+                    })
+            })
     };
 
     render() {
