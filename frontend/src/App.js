@@ -183,18 +183,20 @@ class App extends Component {
                             </ul>
                         </div>
                     </nav>
-                    <Route path="/" exact={false} onChange={this.updateCount}/>
-                    <Route path="/login" component={LoginRegistrationForm}/>
-                    <Route path="/register" component={RegistrationForm}/>
-                    <PrivateRoute path="/book" exact={true} component={DefaultBrowser}/>
-                    <PrivateRoute path="/book/subject" exact={true} component={SubjectPicker}/>
-                    <PrivateRoute path="/book/subject/:subject" component={SubjectBrowser}/>
-                    <PrivateRoute path="/book/search/author" component={AuthorBrowser}/>
-                    <PrivateRoute path="/book/search/title" component={TitleBrowser}/>
-                    <PrivateRoute path="/order" exact={true} component={OrderBrowser}/>
-                    <PrivateRoute path="/order/:order" component={OrderWrapper}/>
-                    <PrivateRoute path="/order/oneclick" component={OneClickOrder}/>
-                    <PrivateRoute path="/cart" component={Cart}/>
+                    <div className="container">
+                        <Route path="/" exact={false} onChange={this.updateCount}/>
+                        <Route path="/login" component={LoginRegistrationForm}/>
+                        <Route path="/register" component={RegistrationForm}/>
+                        <PrivateRoute path="/book" exact={true} component={DefaultBrowser}/>
+                        <PrivateRoute path="/book/subject" exact={true} component={SubjectPicker}/>
+                        <PrivateRoute path="/book/subject/:subject" component={SubjectBrowser}/>
+                        <PrivateRoute path="/book/search/author" component={AuthorBrowser}/>
+                        <PrivateRoute path="/book/search/title" component={TitleBrowser}/>
+                        <PrivateRoute path="/order" exact={true} component={OrderBrowser}/>
+                        <PrivateRoute path="/order/:order" component={OrderWrapper}/>
+                        <PrivateRoute path="/order/oneclick" component={OneClickOrder}/>
+                        <PrivateRoute path="/cart" component={Cart}/>
+                    </div>
                 </div>
             </Router>
         );
