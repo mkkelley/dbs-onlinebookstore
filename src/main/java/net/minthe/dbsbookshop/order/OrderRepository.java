@@ -22,4 +22,7 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
             "FROM odetails " +
             "WHERE ono = :ono", nativeQuery = true)
     BigDecimal getOrderTotal(@Param("ono") long ono);
+
+    @Query(value = "FROM Order as o join fetch o.orderDetailsList as detail join fetch detail.isbn where o.userid = :userid")
+    List<Order> findByUseridWithDetails(@Param("userid") Member userid);
 }

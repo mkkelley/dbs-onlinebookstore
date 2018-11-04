@@ -70,6 +70,7 @@ class App extends Component {
             subject: "",
 
             orderBrowser: false,
+            order: null,
 
             titleSearch: false,
             titleFilter: false,
@@ -98,7 +99,7 @@ class App extends Component {
             return <Cart key="cart"/>
         }
         if (this.state.orderBrowser) {
-            return <OrderBrowser key="orderBrowser"/>
+            return <OrderBrowser key="orderBrowser" order={this.state.order}/>
         }
         if (this.state.subjectPicker) {
             return <SubjectPicker key="subjPicker" onSubjectClick={(subject) => this.setState({
@@ -128,6 +129,14 @@ class App extends Component {
             .then(() => this.updateCount())
     };
 
+    handleOneClickOrder = () => {
+        ainst.get("/api/order/oneclick")
+            .then(response => {
+                console.log(response);
+                this.setState({orderBrowser: true, order: response.data})
+            })
+    };
+
     handleMenuClick = (e) => {
         this.updateCount();
         if (e.key === "By Subject") {
@@ -140,10 +149,13 @@ class App extends Component {
             this.setState({
                 cartView: false,
                 subjectPicker: false,
-                orderBrowser: false
+                orderBrowser: false,
+                order: null
             })
         } else if (e.key === "orders") {
             this.setState({orderBrowser: true})
+        } else if (e.key === "oneclick") {
+            this.handleOneClickOrder()
         }
     };
 
@@ -165,6 +177,7 @@ class App extends Component {
 
                     <MenuItem key="logout" className="float-right">Logout</MenuItem>
                     <MenuItem key="cart" className="float-right"><CartButton key="cartButton" count={this.state.count}/></MenuItem>
+                    <MenuItem key="oneclick" className="float-right">One Click Order</MenuItem>
                 </Menu>}
                 {this.isInSecondaryView() &&
                 <Menu key="backMenu" onClick={this.handleMenuClick} mode="horizontal">

@@ -42,11 +42,20 @@ export default class OrderBrowser extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            orders: [],
+        if (this.props.order !== null) {
+            this.state = {
+                orders: [],
 
-            orderView: false,
-            order: null
+                orderView: true,
+                order: this.props.order
+            }
+        } else {
+            this.state = {
+                orders: [],
+
+                orderView: false,
+                order: null
+            }
         }
     }
 
@@ -61,13 +70,10 @@ export default class OrderBrowser extends Component {
     componentDidMount() {
         window.ainst.get("/api/order/list")
             .then(response => {
-                    console.log(response);
-                    console.log(response.data);
                     this.setState({orders: response.data})
                 }
             )
     }
-
 
     getContent = () => {
         if (this.state.orderView) {

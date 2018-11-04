@@ -59,7 +59,6 @@ public class OrderService {
         order.setShipState(shipState);
         order.setShipZip(zip);
 
-        order = orderRepository.save(order);
 
         List<Cart> cartList = cartRepository.findByUserid(member);
         List<OrderDetails> orderDetailsList = new ArrayList<>();
@@ -69,6 +68,9 @@ public class OrderService {
             cartRepository.delete(c);
         }
 
+        order.setOrderDetailsList(orderDetailsList);
+
+        order = orderRepository.save(order);
         orderDetailsRepository.saveAll(orderDetailsList);
         return order;
     }

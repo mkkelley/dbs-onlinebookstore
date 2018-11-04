@@ -70,6 +70,10 @@ public class Order {
         return orderDetailsList;
     }
 
+    public void setOrderDetailsList(List<OrderDetails> orderDetailsList) {
+        this.orderDetailsList = orderDetailsList;
+    }
+
     public Member getUserid() {
         return userid;
     }
