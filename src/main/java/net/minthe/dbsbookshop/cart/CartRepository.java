@@ -16,6 +16,8 @@ import java.util.List;
 public interface CartRepository extends CrudRepository<Cart, CartKey> {
     List<Cart> findByUserid(Member userid);
 
+    List<Cart> findByUseridOrderByIsbn(Member userid);
+
     @Query(value = "select sum(price * qty) " +
             "from CART " +
             "       inner join BOOKS on CART.ISBN = BOOKS.ISBN " +

@@ -42,7 +42,7 @@ public class ApiCartController {
 
     @GetMapping("/cart/list")
     public List<Cart> viewCart() {
-        return cartRepository.findByUserid(loginService.getUser());
+        return cartRepository.findByUseridOrderByIsbn(loginService.getUser());
     }
 
     @GetMapping("/cart/total")
