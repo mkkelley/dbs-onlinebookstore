@@ -5,6 +5,7 @@ import 'rc-menu/assets/index.css'
 import LoginForm from "./Login";
 import BookBrowser from "./Book";
 import Cart from "./Cart";
+import OrderBrowser from "./OrderBrowser";
 import axios from 'axios';
 
 window.ainst = axios.create({baseURL: 'http://localhost:7070/'});
@@ -68,6 +69,8 @@ class App extends Component {
             subjectFilter: false,
             subject: "",
 
+            orderBrowser: false,
+
             titleSearch: false,
             titleFilter: false,
             title: "",
@@ -83,7 +86,8 @@ class App extends Component {
 
     isInSecondaryView = () => {
         return this.state.cartView ||
-            this.state.subjectPicker;
+            this.state.subjectPicker ||
+            this.state.orderBrowser;
     };
 
     getMainContent = () => {
@@ -92,6 +96,9 @@ class App extends Component {
         }
         if (this.state.cartView) {
             return <Cart key="cart"/>
+        }
+        if (this.state.orderBrowser) {
+            return <OrderBrowser key="orderBrowser"/>
         }
         if (this.state.subjectPicker) {
             return <SubjectPicker key="subjPicker" onSubjectClick={(subject) => this.setState({
@@ -132,8 +139,11 @@ class App extends Component {
         } else if (e.key === "back") {
             this.setState({
                 cartView: false,
-                subjectPicker: false
+                subjectPicker: false,
+                orderBrowser: false
             })
+        } else if (e.key === "orders") {
+            this.setState({orderBrowser: true})
         }
     };
 
@@ -151,6 +161,7 @@ class App extends Component {
                 {this.state.isAuthenticated && !this.isInSecondaryView() &&
                 <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)} mode="horizontal">
                     <MenuItem key="By Subject">By Subject</MenuItem>
+                    <MenuItem key="orders">Orders</MenuItem>
 
                     <MenuItem key="logout" className="float-right">Logout</MenuItem>
                     <MenuItem key="cart" className="float-right"><CartButton key="cartButton" count={this.state.count}/></MenuItem>

@@ -8,12 +8,15 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by Michael Kelley on 10/26/2018
  */
 public interface OrderRepository extends CrudRepository<Order, Long> {
     Page<Order> findByUserid(Member userid, Pageable pageable);
+
+    List<Order> findByUserid(Member userid);
 
     @Query(value = "SELECT SUM(PRICE * QTY) " +
             "FROM odetails " +

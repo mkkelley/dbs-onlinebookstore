@@ -1,5 +1,6 @@
 package net.minthe.dbsbookshop.order;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import net.minthe.dbsbookshop.member.Member;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class Order {
     private int shipZip;
 
     @OneToMany(mappedBy = "ono")
+    @JsonManagedReference
     private List<OrderDetails> orderDetailsList = new ArrayList<>();
 
     public Order(Member userid, long ono, Timestamp received, Timestamp shipped, String shipAddress, String shipCity, String shipState, int shipZip) {

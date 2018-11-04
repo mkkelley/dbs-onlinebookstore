@@ -1,5 +1,6 @@
 package net.minthe.dbsbookshop.order;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import net.minthe.dbsbookshop.book.Book;
 import net.minthe.dbsbookshop.cart.Cart;
 
@@ -19,6 +20,7 @@ public class OrderDetails {
     @Id
     @ManyToOne
     @JoinColumn(name = "ono")
+    @JsonBackReference
     private Order ono;
 
     @Id
