@@ -200,9 +200,10 @@ class App extends Component {
 
     handleCartAdd = (isbn, callback) => {
         ainst.post("/api/cart/" + isbn)
-            .then(() => this.updateCount());
-        console.log(callback);
-        callback()
+            .then(() => {
+                this.updateCount();
+                callback()
+            });
     };
 
     handleOneClickOrder = () => {
