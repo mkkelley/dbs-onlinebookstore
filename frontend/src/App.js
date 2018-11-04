@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Menu, {MenuItem} from 'rc-menu';
+import Menu, {MenuItem, SubMenu} from 'rc-menu';
 import './App.css';
 import 'rc-menu/assets/index.css'
 import LoginForm from "./Login";
@@ -60,6 +60,40 @@ class CartButton extends Component {
     }
 }
 
+class SearchView extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: ""
+        }
+    }
+
+    onChange = (e) => {
+        this.setState({value: e.target.value});
+        this.props.onChange(e.target.value)
+    };
+
+    render() {
+        return (
+            <>
+                <br/>
+                <div className="form-group row">
+                    <div className="col-md-3">&nbsp;</div>
+                    <input type="text"
+                           className="form-control col-md-6"
+                           name="search"
+                           id="search"
+                           placeholder={this.props.label}
+                           onChange={this.onChange}
+                    />
+                </div>
+            </>
+        )
+    }
+
+}
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -77,11 +111,9 @@ class App extends Component {
             order: null,
 
             titleSearch: false,
-            titleFilter: false,
             title: "",
 
             authorSearch: false,
-            authorFilter: false,
             author: "",
 
             cartView: false,
@@ -119,8 +151,28 @@ class App extends Component {
             return <SubjectPicker key="subjPicker" onSubjectClick={(subject) => this.setState({
                 subjectFilter: true,
                 subject: subject,
-                subjectPicker: false
+                subjectPicker: false,
+                titleSearch: false,
+                authorSearch: false
             })}/>
+        }
+        if (this.state.authorSearch) {
+            return <>
+                <SearchView label="Author's Name (partial): " onChange={(author) => this.setState({author: author})}/>
+                <BookBrowser key={"authorSearchBrowser_" + this.state.author}
+                             url="/api/book/search"
+                             queryParams={{author: this.state.author}}
+                             cartChanged={this.handleCartAdd}/>
+            </>;
+        }
+        if (this.state.titleSearch) {
+            return <>
+                <SearchView label="Title (partial): " onChange={(title) => this.setState({title: title})}/>
+                <BookBrowser key={"titleSearchBrowser_" + this.state.title}
+                             url="/api/book/search"
+                             queryParams={{title: this.state.title}}
+                             cartChanged={this.handleCartAdd}/>
+            </>;
         }
         if (this.state.subjectFilter) {
             return <BookBrowser key={this.state.subject}
@@ -135,7 +187,6 @@ class App extends Component {
     handleRegisterButton = () => {
         this.setState({registerView: true})
     };
-
 
     onRegistration = () => {
         this.setState({registerView: false})
@@ -160,6 +211,19 @@ class App extends Component {
             })
     };
 
+    clearFilters = () => {
+        this.setState({
+            subjectFilter: false,
+            subject: "",
+            titleSearch: false,
+            titleFilter: false,
+            title: "",
+            authorSearch: false,
+            authorFilter: false,
+            author: ""
+        })
+    };
+
     handleMenuClick = (e) => {
         this.updateCount();
         if (e.key === "By Subject") {
@@ -173,21 +237,22 @@ class App extends Component {
                 cartView: false,
                 subjectPicker: false,
                 orderBrowser: false,
-                order: null
+                order: null,
+                titleSearch: false,
+                authorSearch: false
             })
         } else if (e.key === "orders") {
             this.setState({orderBrowser: true})
         } else if (e.key === "oneclick") {
             this.handleOneClickOrder()
         } else if (e.key === "clear") {
-            this.setState({
-                subjectFilter: false,
-                subject: "",
-                titleFilter: false,
-                title: "",
-                authorFilter: false,
-                author: ""
-            })
+            this.clearFilters()
+        } else if (e.key === "by_author") {
+            this.clearFilters();
+            this.setState({authorSearch: true})
+        } else if (e.key === "by_title") {
+            this.clearFilters();
+            this.setState({titleSearch: true})
         }
     };
 
@@ -203,14 +268,21 @@ class App extends Component {
         return (
             <div>
                 {this.state.isAuthenticated && !this.isInSecondaryView() &&
-                <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)} mode="horizontal">
-                    <MenuItem key="By Subject">By Subject</MenuItem>
+                <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)}
+                      mode="horizontal">
+                    <SubMenu title="Browse Books">
+                        <MenuItem key="By Subject">By Subject</MenuItem>
+                        <MenuItem key="by_author">By Author</MenuItem>
+                        <MenuItem key="by_title">By Title</MenuItem>
+                    </SubMenu>
                     <MenuItem key="orders">Orders</MenuItem>
                     <MenuItem key="clear">Clear Filters</MenuItem>
 
                     <MenuItem key="logout" className="float-right">Logout</MenuItem>
-                    <MenuItem key="cart" className="float-right"><CartButton key="cartButton" count={this.state.count}/></MenuItem>
-                    <MenuItem key="oneclick" className="float-right">One Click Order</MenuItem>
+                    <MenuItem key="cart" className="float-right"><CartButton
+                        key="cartButton" count={this.state.count}/></MenuItem>
+                    <MenuItem key="oneclick" className="float-right">One Click
+                        Order</MenuItem>
                 </Menu>}
                 {this.isInSecondaryView() &&
                 <Menu key="backMenu" onClick={this.handleMenuClick} mode="horizontal">

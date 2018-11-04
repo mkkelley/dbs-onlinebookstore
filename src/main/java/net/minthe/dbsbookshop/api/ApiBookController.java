@@ -40,4 +40,20 @@ public class ApiBookController {
             @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
         return bookRepository.findBooksBySubjectIgnoreCase(subject, PageRequest.of(page, size));
     }
+
+    @GetMapping("/book/search")
+    public Page<Book> bookSearch(@RequestParam(value = "author", required = false, defaultValue = "") String author,
+                                 @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                                 @RequestParam(value = "page", required = false, defaultValue = "0") int page,
+                                 @RequestParam(value = "size", required = false, defaultValue = "10") int size) {
+        if (title.length() == 0 && author.length() == 0) {
+            return bookList(page, size);
+        } else if (title.length() == 0) {
+            return bookRepository.findBooksByAuthorLikeIgnoreCase("%" + author + "%", PageRequest.of(page, size));
+        } else if (author.length() == 0) {
+            return bookRepository.findBooksByTitleLikeIgnoreCase("%" + title + "%", PageRequest.of(page, size));
+        } else {
+            return bookList(page, size);
+        }
+    }
 }
