@@ -179,6 +179,15 @@ class App extends Component {
             this.setState({orderBrowser: true})
         } else if (e.key === "oneclick") {
             this.handleOneClickOrder()
+        } else if (e.key === "clear") {
+            this.setState({
+                subjectFilter: false,
+                subject: "",
+                titleFilter: false,
+                title: "",
+                authorFilter: false,
+                author: ""
+            })
         }
     };
 
@@ -197,6 +206,7 @@ class App extends Component {
                 <Menu key="menuKey" onClick={(e) => this.handleMenuClick(e)} mode="horizontal">
                     <MenuItem key="By Subject">By Subject</MenuItem>
                     <MenuItem key="orders">Orders</MenuItem>
+                    <MenuItem key="clear">Clear Filters</MenuItem>
 
                     <MenuItem key="logout" className="float-right">Logout</MenuItem>
                     <MenuItem key="cart" className="float-right"><CartButton key="cartButton" count={this.state.count}/></MenuItem>
