@@ -106,6 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/member/new");
+        web.ignoring().antMatchers("/api/member/new");
         web.ignoring().antMatchers("/favicon.ico");
         web.ignoring().antMatchers("/webjars/**");
     }

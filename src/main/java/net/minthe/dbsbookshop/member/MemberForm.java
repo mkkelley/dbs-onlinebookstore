@@ -6,7 +6,7 @@ package net.minthe.dbsbookshop.member;
  * This is the class used to represent unsanitized and unvalidated
  * user input.
  */
-class MemberForm {
+public class MemberForm {
     private String fname;
     private String lname;
     private String address;

@@ -66,7 +66,7 @@ export default class LoginForm extends Component {
                                        type="password" id="password" name="password"/>
                             </div>
                             <div className="text-center">
-                                <input className="btn btn-primary block"
+                                <input className="btn btn-primary btn-block"
                                        type="submit"
                                        value="Login"
                                        disabled={!this.validateForm()}/>

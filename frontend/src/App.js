@@ -7,6 +7,7 @@ import BookBrowser from "./Book";
 import Cart from "./Cart";
 import OrderBrowser from "./OrderBrowser";
 import axios from 'axios';
+import RegistrationForm from "./Registration";
 
 window.ainst = axios.create({baseURL: 'http://localhost:7070/'});
 
@@ -28,6 +29,7 @@ class SubjectPicker extends Component {
         const subjects = this.state.subjects.map(subject =>
             <div key={subject} className="col-md-3">
                 <a className="btn-link btn"
+                   href="#"
                    onClick={() => this.props.onSubjectClick(subject)}>
                     {subject}
                 </a>
@@ -65,6 +67,8 @@ class App extends Component {
         this.state = {
             isAuthenticated: false,
 
+            registerView: false,
+
             subjectPicker: false,
             subjectFilter: false,
             subject: "",
@@ -92,8 +96,18 @@ class App extends Component {
     };
 
     getMainContent = () => {
+        if (this.state.registerView) {
+            return <RegistrationForm onRegistration={this.onRegistration}/>
+        }
         if (!this.state.isAuthenticated) {
-            return <LoginForm userAuthenticated={this.setAuthenticated}/>
+            return <>
+                <LoginForm userAuthenticated={this.setAuthenticated}/>
+                <br/>
+                <div className="text-center"><h2>OR</h2></div>
+                <br/>
+                <a href="#" onClick={() => this.handleRegisterButton()}
+                   className="btn btn-success btn-block">Register</a>
+            </>
         }
         if (this.state.cartView) {
             return <Cart key="cart"/>
@@ -116,6 +130,15 @@ class App extends Component {
             return <BookBrowser key="none" url="/api/book"
                                 cartChanged={this.handleCartAdd}/>
         }
+    };
+
+    handleRegisterButton = () => {
+        this.setState({registerView: true})
+    };
+
+
+    onRegistration = () => {
+        this.setState({registerView: false})
     };
 
     setAuthenticated = (username, password) => {
