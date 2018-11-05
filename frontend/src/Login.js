@@ -24,7 +24,7 @@ export default class LoginForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        window.ainst.post('http://localhost:7070/api/login', {
+        window.ainst.post('/api/login', {
                 username: this.state.username,
                 password: this.state.password
             },
