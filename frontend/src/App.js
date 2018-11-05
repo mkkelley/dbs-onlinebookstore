@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import 'rc-menu/assets/index.css'
 import LoginForm from "./Login";
 import BookBrowser from "./Book";
 import Cart from "./Cart";
