@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import 'rc-menu/assets/index.css'
 import {Redirect} from "react-router-dom";
 
 export default class LoginForm extends Component {
