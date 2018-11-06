@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
+import {Link} from "react-router-dom";
 
 
 class CartItem extends Component {
@@ -86,29 +87,32 @@ export default class Cart extends Component {
                       setQty={this.changeBookQty}/>
         );
         return (
-            <table className="table">
-                <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                    <th>&nbsp;</th>
-                </tr>
-                </thead>
-                <tbody>
-                {cartItems}
-                {cartItems.length !== 0 &&
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>${Number(this.state.total).toFixed(2)}</td>
-                    <td>&nbsp;</td>
-                </tr>}
-                </tbody>
+            <>
+                <table className="table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {cartItems}
+                    {cartItems.length !== 0 &&
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>${Number(this.state.total).toFixed(2)}</td>
+                        <td>&nbsp;</td>
+                    </tr>}
+                    </tbody>
 
-            </table>
+                </table>
+                {cartItems.length !== 0 && <Link to="/order/new" className="btn btn-primary">Check Out</Link>}
+            </>
         )
     }
 }

@@ -82,8 +82,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .formLogin()
                     .loginPage("/login")
+                    .defaultSuccessUrl("/book", true)
                     .permitAll()
-                    .defaultSuccessUrl("/book")
                     .failureUrl("/login")
                     .and()
                     .logout().logoutSuccessUrl("/login");
@@ -105,6 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
+        web.ignoring().antMatchers("/v2/**");
         web.ignoring().antMatchers("/member/new");
         web.ignoring().antMatchers("/api/member/new");
         web.ignoring().antMatchers("/favicon.ico");

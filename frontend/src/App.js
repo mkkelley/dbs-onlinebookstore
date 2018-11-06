@@ -8,6 +8,7 @@ import axios from 'axios';
 import RegistrationForm from "./Registration";
 import Order from "./Order";
 import {BrowserRouter as Router, Link, Redirect, Route} from "react-router-dom";
+import OrderForm from "./OrderForm";
 
 window.ainst = axios.create({baseURL: 'http://localhost:7070/'});
 window.ainst.defaults.headers.common['Authorization'] = "Basic " + btoa("john_smith:js");
@@ -146,7 +147,7 @@ class App extends Component {
 
     render() {
         return (
-            <Router>
+            <Router basename="/v2/">
                 <div>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                         <div className="collapse navbar-collapse">
@@ -173,7 +174,7 @@ class App extends Component {
                                     <Link to="/order/oneclick" className="nav-link">One Click Order</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/cart" className="nav-link">Cart ({this.state.count})</Link>
+                                    <Link to="/cart" className="nav-link">Cart</Link>
                                 </li>
                                 <li className="nav-item">
                                     <a href='#' className="nav-link" onClick={logout}>Logout</a>
@@ -182,7 +183,12 @@ class App extends Component {
                         </div>
                     </nav>
                     <div className="container">
-                        <Route path="/" exact={false} onChange={this.updateCount}/>
+                        <Route path="/" exact={true} onChange={this.updateCount} render={() => (
+                            <Redirect to="/book"/>
+                        )}/>
+                        <Route path="/index.html" exact={true} render={() => (
+                            <Redirect to="/book"/>
+                        )}/>
                         <Route path="/login" component={LoginRegistrationForm}/>
                         <Route path="/register" component={RegistrationForm}/>
                         <PrivateRoute path="/book" exact={true} component={DefaultBrowser}/>
@@ -192,7 +198,8 @@ class App extends Component {
                         <PrivateRoute path="/book/search/title" component={TitleBrowser}/>
                         <PrivateRoute path="/order" exact={true} component={OrderBrowser}/>
                         <PrivateRoute path="/order/:order" component={OrderWrapper}/>
-                        <PrivateRoute path="/order/oneclick" component={OneClickOrder}/>
+                        <PrivateRoute path="/order/oneclick" exact={true} component={OneClickOrder}/>
+                        <PrivateRoute path="/order/new" exact={true} component={OrderForm}/>
                         <PrivateRoute path="/cart" component={Cart}/>
                     </div>
                 </div>

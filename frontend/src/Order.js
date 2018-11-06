@@ -26,12 +26,20 @@ export default class Order extends Component {
         }
     }
 
-    componentDidMount() {
+    updateOrder = () => {
         window.ainst.get("/api/order/" + this.props.order)
             .then(response => {
                 console.log(response);
                 this.setState({order: response.data})
             })
+            .catch(() => {
+                setTimeout(() => this.updateOrder(), 100);
+            })
+    };
+
+    componentDidMount() {
+        console.log("Order mounted");
+        this.updateOrder();
     }
 
     render() {

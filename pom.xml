@@ -141,7 +141,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/classes/resources</outputDirectory>
+                            <outputDirectory>${basedir}/target/classes/resources/v2</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${basedir}/frontend/build</directory>

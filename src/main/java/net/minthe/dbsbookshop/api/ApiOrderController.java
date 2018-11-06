@@ -1,16 +1,16 @@
 package net.minthe.dbsbookshop.api;
 
 import net.minthe.dbsbookshop.member.LoginService;
-import net.minthe.dbsbookshop.order.Order;
-import net.minthe.dbsbookshop.order.OrderRepository;
-import net.minthe.dbsbookshop.order.OrderService;
+import net.minthe.dbsbookshop.member.Member;
+import net.minthe.dbsbookshop.member.MemberRepository;
+import net.minthe.dbsbookshop.order.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -25,12 +25,19 @@ public class ApiOrderController {
     private final OrderRepository orderRepository;
     private final LoginService loginService;
     private final OrderService orderService;
+    private final MemberRepository memberRepository;
+
+    @InitBinder("orderForm")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(new OrderFormValidator());
+    }
 
     @Autowired
-    public ApiOrderController(OrderRepository orderRepository, LoginService loginService, OrderService orderService) {
+    public ApiOrderController(OrderRepository orderRepository, LoginService loginService, OrderService orderService, MemberRepository memberRepository) {
         this.orderRepository = orderRepository;
         this.loginService = loginService;
         this.orderService = orderService;
+        this.memberRepository = memberRepository;
     }
 
     @GetMapping("/order/list")
@@ -42,6 +49,34 @@ public class ApiOrderController {
     public Order getOrder(@PathVariable("ono") long ono) {
         Optional<Order> optionalOrder = orderRepository.findById(ono);
         return optionalOrder.orElseThrow();
+    }
+
+    @PostMapping("/order/new")
+    public ResponseEntity<?> submitOrder(@Valid @RequestBody OrderForm orderForm,
+                                         BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.badRequest().body(bindingResult.getModel());
+        }
+
+        Member member = loginService.getUser();
+        if (orderForm.isNewCc()) {
+            member.setCreditcardnumber(orderForm.getNewCcn());
+            member.setCreditcardtype(orderForm.getNewCcType());
+            memberRepository.save(member);
+        }
+
+        if (!orderService.canOrder(member)) {
+            return ResponseEntity.badRequest().body("Member is unable to order.");
+        }
+
+        Order order = orderService.generateOrder(
+                member,
+                Timestamp.from(Instant.now()),
+                orderForm.getShipAddress(),
+                orderForm.getShipCity(),
+                orderForm.getShipState(),
+                orderForm.getShipZip());
+        return ResponseEntity.ok(order);
     }
 
     @GetMapping("/order/oneclick")
